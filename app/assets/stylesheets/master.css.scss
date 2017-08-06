@@ -1,0 +1,14 @@
+@import "bootstrap";
+
+.chess_board { border:5px solid #333; }
+.chess_board td {
+background:#ffffff;
+height:80px;
+text-align:center;
+vertical-align:middle;
+width:80px;
+}
+#chess_board tr:nth-child(odd) td:nth-child(even),
+#chess_board tr:nth-child(even) td:nth-child(odd) {
+background:#000000;
+}
