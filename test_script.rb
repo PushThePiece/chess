@@ -1,6 +1,4 @@
 
-# There is a piece at 4,4
-
 g = Game.new
 
 p = Piece.new(3,3,g)
@@ -13,4 +11,4 @@ r = Piece.new(1,1,g)
 puts r.is_obstructed?(5,5)
 
 t = Piece.new(3,3,g)
-puts t.is_obstructed?(8,3)
+puts t.is_obstructed?(8,8)
