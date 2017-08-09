@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
+
     # describe "games#new action" do
     #   it "should require users to be logged in" do
     #     get :new

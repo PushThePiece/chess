@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
 
+
   
   def new
     @game = Game.new
@@ -18,6 +19,9 @@ class GamesController < ApplicationController
   #   params.require(:game).permit(:current_user)
   # end
 
+  def index
+  end
 
+  def show
+  end
 
-end
