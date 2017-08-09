@@ -5,6 +5,16 @@
 # -
 
 class Piece < ApplicationRecord
+
+
+  belongs_to :game
+  self.inheritance_column :types
+
+  def self.types
+    %w(Pawn Knight Rook King Queen Bishop)
+  end
+
+
   
   attr_accessor :x, :y
 
@@ -96,5 +106,6 @@ class Piece < ApplicationRecord
   private
   
   attr_accessor :game
+
 
 end

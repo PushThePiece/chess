@@ -1,4 +1,7 @@
 class Game < ApplicationRecord
+
+  has_many :pieces
+
   
   def is_occupied?(x, y)
     return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
@@ -14,5 +17,6 @@ class Game < ApplicationRecord
     # To do: Database lookup here e.g.
     # Game.find(..where piece.x == foo and piece.y == bar) etc.
   end
+
 
 end
