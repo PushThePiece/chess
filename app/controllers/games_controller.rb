@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   end
 
   def show
-
+    @game = Game.find(params[:id])
   end
   
   def new
@@ -23,8 +23,8 @@ class GamesController < ApplicationController
 
   private
 
-  # def game_params
-  #   params.require(:game).permit(:current_user)
-  # end
+  def game_params
+    params.require(:game).permit(:current_user)
+  end
 
 end
