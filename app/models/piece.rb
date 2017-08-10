@@ -111,6 +111,7 @@ class Piece < ApplicationRecord
   private
   
   attr_accessor :game
+  attr_writer :x, :y, :color
 
 
 end
