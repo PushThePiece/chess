@@ -8,16 +8,6 @@ class Piece < ApplicationRecord
   def self.types
     %w(Pawn Knight Rook King Queen Bishop)
   end
-
-  attr_reader :x, :y, :color
-
-  def initialize(loc_x, loc_y, color, game)
-    super()
-    @x = loc_x
-    @y = loc_y
-    @color = color
-    @game = game
-  end
   
   def move_to!(new_x, new_y)
     if game.is_occupied?(new_x, new_y) == false
@@ -93,8 +83,7 @@ class Piece < ApplicationRecord
   end
 
 
-  def update_position(new_x,new_y)
-    # Does this update the record in the DB?
+  def update_attributes(new_x,new_y)
     x, y = new_x, new_y
   end
 
@@ -104,14 +93,7 @@ class Piece < ApplicationRecord
   end
 
   def remove_from_game!
-    update_position(nil, nil)
+    update_attributes(nil, nil)
   end
-
-
-  private
-  
-  attr_accessor :game
-  attr_writer :x, :y, :color
-
 
 end

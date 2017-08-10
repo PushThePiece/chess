@@ -9,7 +9,7 @@ class Game < ApplicationRecord
   end
 
   def get_piece_at(x,y)
-    return pieces.find(:x => x, :y => y)
+    return pieces.find(x: x, y: y)
   end
 
 end
