@@ -1,9 +1,4 @@
 
-# Possible things to do:
-# -Create "square" struct and convert all dest_x dest_y type args into a struct, with struct.x, struct.y
-#   (only if it would make the code cleaner)
-# -
-
 class Piece < ApplicationRecord
 
 
@@ -14,7 +9,7 @@ class Piece < ApplicationRecord
     %w(Pawn Knight Rook King Queen Bishop)
   end
 
-  attr_accessor :x, :y, :color
+  attr_reader :x, :y, :color
 
   def initialize(loc_x, loc_y, color, game)
     super()
@@ -41,7 +36,7 @@ class Piece < ApplicationRecord
   # Note: This method does not check if a move is valid. We will be using the valid_move? method to do that.
   def move_to!(new_x, new_y)
     if game.is_occupied?(new_x, new_y) == false
-      x, y = new_x, new_y
+      update_position(new_x, new_y)
     else
       target_piece = game.get_piece_at(new_x, new_y)
       if target_piece.color == color
@@ -53,7 +48,7 @@ class Piece < ApplicationRecord
           # raise error
         else
           target_piece.remove_from_game!
-          x,y = new_x, new_y
+          update_position(new_x, new_y)
         end
       end
     end
@@ -112,13 +107,19 @@ class Piece < ApplicationRecord
     return false
   end
 
+
+  def update_position(new_x,new_y)
+    # Need to find piece in database and update fields
+    x, y = new_x, new_y
+  end
+
   # Captured piece is denoted by a nil position
   def captured?
     x == nil || y == nil
   end
 
   def remove_from_game!
-    x, y = nil, nil
+    update_position(nil, nil)
   end
 
 
