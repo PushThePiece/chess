@@ -14,14 +14,13 @@ class Piece < ApplicationRecord
     %w(Pawn Knight Rook King Queen Bishop)
   end
 
+  attr_accessor :x, :y, :color
 
-  
-  attr_accessor :x, :y
-
-  def initialize(loc_x, loc_y, game)
+  def initialize(loc_x, loc_y, color, game)
     super()
     @x = loc_x
     @y = loc_y
+    @color = color
     @game = game
   end
   
@@ -41,7 +40,23 @@ class Piece < ApplicationRecord
   # It should call update_attributes on the piece and change the piece’s x/y position.
   # Note: This method does not check if a move is valid. We will be using the valid_move? method to do that.
   def move_to!(new_x, new_y)
-  # logic here
+    if game.is_occupied?(new_x, new_y) == false
+      x, y = new_x, new_y
+    else
+      target_piece = game.get_piece_at(new_x, new_y)
+      if target_piece.color == color
+        # raise error
+      else
+        if target_piece.type == "King"
+          # opponent is in check
+          # cannot capture the king
+          # raise error
+        else
+          target_piece.remove_from_game!
+          x,y = new_x, new_y
+        end
+      end
+    end
   end
   
   def is_obstructed?(dest_x, dest_y)
@@ -100,6 +115,10 @@ class Piece < ApplicationRecord
   # Captured piece is denoted by a nil position
   def captured?
     x == nil || y == nil
+  end
+
+  def remove_from_game!
+    x, y = nil, nil
   end
 
 

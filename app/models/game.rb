@@ -12,7 +12,7 @@ class Game < ApplicationRecord
     
     #return nil => is_obstructed will always return false
     
-    return Piece.new(x,y,self) # => is_obstructed always returns true immediately
+    return Piece.new(x, y, "white", self) # => is_obstructed always returns true immediately
     
     # To do: Database lookup here e.g.
     # Game.find(..where piece.x == foo and piece.y == bar) etc.
