@@ -64,11 +64,11 @@ class Piece < ApplicationRecord
     end
   end
 
-  def is_horizontal?(dest_x, dest_y)
+  def is_horizontal?(_dest_x, dest_y)
     return y == dest_y
   end
 
-  def is_vertical?(dest_x, dest_y)
+  def is_vertical?(dest_x, _dest_y)
     return x == dest_x
   end
 
