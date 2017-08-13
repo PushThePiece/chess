@@ -17,7 +17,7 @@ class Game < ApplicationRecord
   end
 
   def get_piece_at(x,y)
-    return self.pieces.where(:x => x, :y => y, :game => self).first
+    return Piece.where(:x => x, :y => y, :game_id => id).first
   end
 
 
