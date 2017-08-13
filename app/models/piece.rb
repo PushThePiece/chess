@@ -79,6 +79,7 @@ class Piece < ApplicationRecord
 
   def is_adjacent?(dest_x, dest_y)
     return true if ((dest_x + dest_y) - (x + y)).abs == 1
+    return true if (dest_x - x).abs == 1 && (dest_y - y).abs == 1
     return false
   end
 
