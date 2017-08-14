@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
+
+  it "should successfully test the is_move_valid? method" do
+    g = Game.new
+    k = King.create(x: 4, y: 3, game: g) 
+    expect(k.is_move_valid?(3, 2)).to be(true)
+    expect(k.is_move_valid?(2, 2)).to be(false)
+    expect(k.is_move_valid?(3, 3)).to be(true)
+    expect(k.is_move_valid?(4, 4)).to be(true)
+    expect(k.is_move_valid?(4, 6)).to be(false)
+    expect(k.is_move_valid?(5, 4)).to be(true)
+  end
+   # 
+
   it "should successfully determine if piece is obstructed in a horizontal path" do
     g = Game.new
 
@@ -36,6 +49,7 @@ RSpec.describe GamesController, type: :controller do
 
   end
 
+
   describe "games#index" do
     it "should successfully show the games/index page" do
       get :index
@@ -50,4 +64,7 @@ RSpec.describe GamesController, type: :controller do
 
   end
 
+
+
 end
+
