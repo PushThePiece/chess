@@ -5,20 +5,27 @@ class Piece < ApplicationRecord
   belongs_to :game
 
   def move_to!(new_x, new_y)
+    p "1"
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y)
+      p "2"
     else
       target_piece = game.get_piece_at(new_x, new_y)
       if target_piece.color == self.color
+        p "3"
         # raise error
       else
         if target_piece.type == "King"
+          p "4"
           # opponent is in check
           # cannot capture the king
           # raise error
         else
+          p "5"
           target_piece.remove_from_game!
+          p "6: #{target_piece.x.nil?}"
           update_attributes(:x => new_x, :y => new_y)
+          p "7"
         end
       end
     end
@@ -80,7 +87,7 @@ class Piece < ApplicationRecord
 
   # Captured piece is denoted by a nil position
   def captured?
-    x == nil || y == nil
+    x == nil && y == nil
   end
 
   def remove_from_game!
