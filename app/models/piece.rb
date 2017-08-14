@@ -75,14 +75,15 @@ class Piece < ApplicationRecord
   end
 
   def is_diagonal?(dest_x, dest_y)
-    return true if dest_x - x == dest_y - y || dest_x - x == (-1)*(dest_y - y)
-    return false
+    dest_x - x == dest_y - y || dest_x - x == (-1)*(dest_y - y)
   end
 
   def is_adjacent?(dest_x, dest_y)
+
     return true if ((dest_x + dest_y) - (x + y)).abs == 1
     return true if (dest_x - x).abs == 1 && (dest_y - y).abs == 1
     return false
+
   end
 
   # Captured piece is denoted by a nil position
@@ -93,5 +94,6 @@ class Piece < ApplicationRecord
   def remove_from_game!
     update_attributes(:x => nil, :y => nil)
   end
+
 
 end
