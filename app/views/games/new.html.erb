@@ -1,4 +1,4 @@
-<%= simple_form_for @game, url: game_path do |f| %>
-  
-  <%= f.sumbit :"Create", class: 'btn btn-primary' %>
+<%= simple_form_for @game, url: games_path do |f| %>
+  <%= f.input :user %>
+  <%= f.submit "Play Game", class: 'btn btn-primary' %>
 <% end %>
