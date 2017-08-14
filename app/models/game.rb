@@ -1,20 +1,57 @@
 class Game < ApplicationRecord
+  after_create :populate_game!
   has_many :pieces
+
   
   belongs_to :white, class_name: "User", foreign_key: "white_user_id" 
   belongs_to :black, class_name: "User", foreign_key: "black_user_id"
 
-# irb(main):041:0> game = Game.new(white: User.first, black: User.last)
-#   User Load (0.2ms)  SELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1  [["LIMIT", 1]]
-#   User Load (0.3ms)  SELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1  [["LIMIT", 1]]
-# => #<Game id: nil, white_user_id: 1, black_user_id: 1>
-# irb(main):042:0> game.save
-#    (0.4ms)  BEGIN
-#   SQL (0.4ms)  INSERT INTO "games" ("white_user_id", "black_user_id") VALUES ($1, $2) RETURNING "id"  [["white_user_id", 1], ["black_user_id", 1]]
-#    (0.5ms)  COMMIT
-# => true
-# irb(main):043:0> game.black
-# => #<User id: 1, email: "gretchonian@hotmail.com", created_at: "2017-08-09 17:22:57", updated_at: "2017-08-09 17:22:57">
-# irb(main):044:0> game.white
-# => #<User id: 1, email: "gretchonian@hotmail.com", created_at: "2017-08-09 17:22:57", updated_at: "2017-08-09 17:22:57">
+
+  def is_occupied?(x, y)
+    return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
+    return true
+  end
+
+  def get_piece_at(x,y)
+    return Piece.where(:x => x, :y => y, :game_id => id).last
+  end
+
+
+  private
+  
+  def populate_game!
+    #white pieces
+    (1..8).each do |i|
+      Pawn.create(x: i, y: 2, color: 'white', game: self)
+    end
+
+    Rook.create(x: 1, y: 1, color: 'white', game: self)
+    Rook.create(x: 8, y: 1, color: 'white', game: self)
+
+    Knight.create(x: 2, y: 1, color: 'white', game: self)
+    Knight.create(x: 7, y: 1, color: 'white', game: self)
+
+    Bishop.create(x: 3, y: 1, color: 'white', game: self)
+    Bishop.create(x: 6, y: 1, color: 'white', game: self)
+
+    King.create(x: 4, y: 1, color: 'white', game: self)
+    Queen.create(x: 5, y: 1, color: 'white', game: self)
+
+    #black pieces
+    (1..8).each do |i|
+      Pawn.create(x: i, y: 7, color: 'black', game: self)
+    end
+
+    Rook.create(x: 1, y: 8, color: 'black', game: self)
+    Rook.create(x: 8, y: 8, color: 'black', game: self)
+
+    Knight.create(x: 2, y: 8, color: 'black', game: self)
+    Knight.create(x: 7, y: 8, color: 'black', game: self)
+
+    Bishop.create(x: 3, y: 8, color: 'black', game: self)
+    Bishop.create(x: 6, y: 8, color: 'black', game: self)
+
+    King.create(x: 4, y: 8, color: 'black', game: self)
+    Queen.create(x: 5, y: 8, color: 'black', game: self)
+  end
 end
