@@ -8,15 +8,6 @@ class Piece < ApplicationRecord
   def self.types
     %w(Pawn Knight Rook King Queen Bishop)
   end
-  
-
-  # def initialize(loc_x, loc_y, game)
-  #   super()
-  #   @x = loc_x
-  #   @y = loc_y
-  #   @game = game
-  # end
-  
 
   def move_to!(new_x, new_y)
     if game.is_occupied?(new_x, new_y) == false
@@ -82,13 +73,11 @@ class Piece < ApplicationRecord
   end
 
   def is_diagonal?(dest_x, dest_y)
-    return true if dest_x - x == dest_y - y || dest_x - x == (-1)*(dest_y - y)
-    return false
+    dest_x - x == dest_y - y || dest_x - x == (-1)*(dest_y - y)
   end
 
   def is_adjacent?(dest_x, dest_y)
-    return true if ((dest_x + dest_y) - (x + y)).abs == 1
-    return false
+    (dest_x - x).abs == 1 && (dest_y - y).abs == 1
   end
 
 
