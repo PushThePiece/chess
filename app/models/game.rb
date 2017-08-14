@@ -17,36 +17,36 @@ class Game < ApplicationRecord
   def populate_game!
     #white pieces
     (1..8).each do |i|
-      Pawn.create(self: id, x: i, y: 2, color: 'white')
+      Pawn.create(x: i, y: 2, color: 'white', game: self)
     end
 
-    Rook.create(self: id, x: 1, y: 1, color: 'white')
-    Rook.create(self: id, x: 8, y: 1, color: 'white')
+    Rook.create(x: 1, y: 1, color: 'white', game: self)
+    Rook.create(x: 8, y: 1, color: 'white', game: self)
 
-    Knight.create(self: id, x: 2, y: 1, color: 'white')
-    Knight.create(self: id, x: 7, y: 1, color: 'white')
+    Knight.create(x: 2, y: 1, color: 'white', game: self)
+    Knight.create(x: 7, y: 1, color: 'white', game: self)
 
-    Bishop.create(self: id, x: 3, y: 1, color: 'white')
-    Bishop.create(self: id, x: 6, y: 1, color: 'white')
+    Bishop.create(x: 3, y: 1, color: 'white', game: self)
+    Bishop.create(x: 6, y: 1, color: 'white', game: self)
 
-    King.create(self: id, x: 4, y: 1, color: 'white')
-    Queen.create(self: id, x: 5, y: 1, color: 'white')
+    King.create(x: 4, y: 1, color: 'white', game: self)
+    Queen.create(x: 5, y: 1, color: 'white', game: self)
 
     #black pieces
     (1..8).each do |i|
-      Pawn.create(self: id, x: i, y: 7, color: 'black')
+      Pawn.create(x: i, y: 7, color: 'black', game: self)
     end
 
-    Rook.create(self: id, x: 1, y: 8, color: 'black')
-    Rook.create(self: id, x: 8, y: 8, color: 'black')
+    Rook.create(x: 1, y: 8, color: 'black', game: self)
+    Rook.create(x: 8, y: 8, color: 'black', game: self)
 
-    Knight.create(self: id, x: 2, y: 8, color: 'black')
-    Knight.create(self: id, x: 7, y: 8, color: 'black')
+    Knight.create(x: 2, y: 8, color: 'black', game: self)
+    Knight.create(x: 7, y: 8, color: 'black', game: self)
 
-    Bishop.create(self: id, x: 3, y: 8, color: 'black')
-    Bishop.create(self: id, x: 6, y: 8, color: 'black')
+    Bishop.create(x: 3, y: 8, color: 'black', game: self)
+    Bishop.create(x: 6, y: 8, color: 'black', game: self)
 
-    King.create(self: id, x: 4, y: 8, color: 'black')
-    Queen.create(self: id, x: 5, y: 8, color: 'black')
+    King.create(x: 4, y: 8, color: 'black', game: self)
+    Queen.create(x: 5, y: 8, color: 'black', game: self)
   end
 end

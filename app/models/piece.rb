@@ -3,12 +3,7 @@ class Piece < ApplicationRecord
 
 
   belongs_to :game
-  self.inheritance_column 
 
-  def self.types
-    %w(Pawn Knight Rook King Queen Bishop)
-  end
-  
   def move_to!(new_x, new_y)
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y)
