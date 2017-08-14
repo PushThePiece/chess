@@ -2,15 +2,6 @@ class Game < ApplicationRecord
   after_create :populate_game!
   has_many :pieces
 
-  def is_occupied?(x, y)
-    return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
-    return true
-  end
-
-  def get_piece_at(x,y)
-    return Piece.where(:x => x, :y => y, :game_id => id).first
-  end
-
   def self.create_game(params)
     game = Game.create(params)
     game.populate_game!
@@ -52,5 +43,16 @@ class Game < ApplicationRecord
     King.create(game_id: id, x: 4, y: 8, color: 'black')
     Queen.create(game_id: id, x: 5, y: 8, color: 'black')
   end
+
+  
+  def is_occupied?(x, y)
+    return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
+    return true
+  end
+
+  def get_piece_at(x,y)
+    return Piece.where(:x => x, :y => y, :game_id => id).first
+  end
+
 
 end
