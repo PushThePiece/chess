@@ -16,7 +16,12 @@ class GamesController < ApplicationController
   end
 
   def create
-    current_user = game_params[:user]
+    @game = Game.create(black: current_user, white: current_user)
+    if @game.valid?
+      redirect_to game_path(@game)
+    else
+      render :new, status: :unprocessable_entity
+    end  
   end
 
   # def join
@@ -26,7 +31,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:user)
+    params.require(:game).permit(black: :current_user)
   end
 
   # def game

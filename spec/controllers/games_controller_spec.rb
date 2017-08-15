@@ -40,19 +40,36 @@ RSpec.describe GamesController, type: :controller do
       end
     end
 
-    # describe "games#create action" do
-    #   it "should require users to be logged in" do
-    #     post :create, params: {}
-    #     expect(response).to ...
-    #   end
+    describe "games#create action" do
+      it "should require users to be logged in" do
+        post :create, params: { game: { user_id: "dummyEmail@gmail.com" } }
+        expect(response).to redirect_to new_user_session_path
+      end
 
-    #   it "should successfully create a new game" do
-    #     user = FactoryGirl.create(:user)
-    #     sign_in user
+      it "should successfully create a new game" do
+        user = FactoryGirl.create(:user)
+        sign_in user
 
-    #     post :create, parmas {}
-    #     expect(response).to ...
-    #   end
-    # end
+        post :create, params: { game: { black_user_id: user } }
+        
+        game = Game.last
+        expect(game.black).to eq(user)
+        expect(game.white).to eq(user)
+    
+        # expect(response).to redirect_to game_path
+    end
+
+      #         post :create, params: { gram: { 
+      #   message: 'Hello!',
+      #   picture: fixture_file_upload("/picture.jpg", 'image/jpg')
+      #   }
+      # }
+      # expect(response).to redirect_to root_path
+
+      # gram = Gram.last
+      # expect(gram.message).to eq("Hello!")
+      # expect(gram.user).to eq(user)
+      # end
+    end
 
 end
