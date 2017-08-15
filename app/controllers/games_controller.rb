@@ -34,7 +34,7 @@ class GamesController < ApplicationController
     params.require(:game).permit(black: :current_user)
   end
 
-  # def game
-  #   @game ||= Game.where(id: params[:id]).last
-  # end
+  def game
+    @game ||= Game.where(id: params[:id]).last
+  end
 end
