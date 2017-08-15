@@ -16,8 +16,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    new_player = game_params[:black]
-    @game = Game.create(black: new_player, white: current_user)
+    # new_player = game_params(current_user)
+    @game = Game.create(black: current_user, white: current_user)
     if @game.valid?
       redirect_to game_path(@game)
     else
@@ -29,7 +29,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(black: :current_user)
+    params.require(:game).permit(:black)
   end
 
   # def game

@@ -49,14 +49,14 @@ RSpec.describe GamesController, type: :controller do
       it "should successfully create a new game" do
         user1 = FactoryGirl.create(:user)
         sign_in user1
-        user2 = FactoryGirl.create(:user)
-        sign_in user2
+        # user2 = FactoryGirl.create(:user)
+        # sign_in user2
 
-        post :create, params: { game: { black_user_id: "user1", white_user_id: "user2" } }
+        post :create, params: { game: { black_user_id: user1, white_user_id: user1 } }
         
         game = Game.last
         expect(game.black).to eq(user1)
-        expect(game.white).to eq(user2)
+        expect(game.white).to eq(user1)
     
         # expect(response).to redirect_to game_path
     end
