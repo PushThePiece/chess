@@ -3,7 +3,7 @@
     <%= (1...8).each do |x| %>
         <tr>
             <%= (1...8).each do |y| %>
-                <td id= <%= coord_to_alg_notation(tr, td) %> ><a href="#">
+                <td id= <%= coord_to_alg_notation(x, y) %> ><a href="#">
                     <% piece = get_piece_at(x, y) %>
                     <% if !piece.nil? %>
                         <%= piece_html(piece) %>

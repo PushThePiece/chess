@@ -11,14 +11,6 @@ class Game < ApplicationRecord
     return Piece.where(:x => x, :y => y, :game_id => id).first
   end
 
-  def coord_to_alg_notation(x, y)
-  
-  end
-
-  def piece_html(piece)
-    piece.color + " " + piece.type
-  end
-
   private
   
   def populate_game!
