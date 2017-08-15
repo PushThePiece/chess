@@ -44,6 +44,12 @@ class Game < ApplicationRecord
     Queen.create(game_id: id, x: 5, y: 8, color: 'black')
   end
 
+  def is_occupied?(x, y)
+    return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
+    return true
+  end
+
+  
   def get_piece_at(x,y)
     return Piece.where(:x => x, :y => y, :game_id => id).last
   end
