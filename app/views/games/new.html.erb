@@ -1,4 +1,8 @@
-<%= simple_form_for @game, url: games_path do |f| %>
-  <%= f.input :black %>
-  <%= f.submit "Play Game", class: 'btn btn-primary' %>
-<% end %>
+<br/>
+<div class = "col-6 offset-1">
+
+  <%= simple_form_for @game, url: games_path do |f| %>
+    <%= f.input :black %>
+    <%= f.submit "Play Game", class: 'btn btn-primary' %>
+  <% end %>
+</div>

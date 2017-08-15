@@ -16,7 +16,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(black: current_user, white: current_user)
+    new_player = game_params[:black]
+    @game = Game.create(black: new_player, white: current_user)
     if @game.valid?
       redirect_to game_path(@game)
     else
@@ -24,9 +25,6 @@ class GamesController < ApplicationController
     end  
   end
 
-  # def join
-  #   #update current_game.update_attributes(merge:user)???
-  # end
 
   private
 
@@ -34,7 +32,7 @@ class GamesController < ApplicationController
     params.require(:game).permit(black: :current_user)
   end
 
-  def game
-    @game ||= Game.where(id: params[:id]).last
-  end
+  # def game
+  #   @game ||= Game.where(id: params[:id]).last
+  # end
 end
