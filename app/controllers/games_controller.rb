@@ -5,12 +5,12 @@ class GamesController < ApplicationController
   end
 
   def show
-    
+    @game = current_game
   end
 
   private
 
-  def game
-    @game ||= Game.where(id: params[:id]).last
+  def current_game
+    Game.where(id: params[:id]).last
   end
 end

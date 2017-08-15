@@ -4,9 +4,9 @@
         <tr>
             <%= (1...8).each do |y| %>
                 <td>
-                <% piece = game.get_piece_at(x, y) %>
+                <% piece = @game.get_piece_at(x, y) %>
                 <% if !piece.nil? %>
-                    <a href="#"><%= render_piece(piece) %></a>
+                    <a href="#"><%= @game.render_piece(piece) %></a>
                 <% end %>
                 </td>
             <% end> %>
