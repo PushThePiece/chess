@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def show
-
+    
   end
 
   private
