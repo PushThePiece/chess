@@ -49,4 +49,22 @@ RSpec.describe GamesController, type: :controller do
 
   end
 
+
+  describe "games#index" do
+    it "should successfully show the games/index page" do
+      get :index
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  it "should successfully display the pieces on the board" do
+    g = Game.create(:white_user_id => 1, :black_user_id => 1)
+    
+    expect(g.populate_game!)
+
+  end
+
+
+
 end
+
