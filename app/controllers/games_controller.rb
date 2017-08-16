@@ -16,11 +16,17 @@ class GamesController < ApplicationController
   end
 
   def show
+    @game = current_game
   end
 
   private
 
+  def current_game
+    Game.where(id: params[:id]).last
+  end
+    
   def game_params
     params.require(:game).permit(:white_user_id, :black_user_id)
+
   end
 end

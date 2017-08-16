@@ -2,11 +2,12 @@ class Game < ApplicationRecord
   after_create :populate_game!
   has_many :pieces
 
-  def self.create_game(params)
-    game = Game.create(params)
-    game.populate_game!
-    game
+  def get_piece_at(x,y)
+    return Piece.where(:x => x, :y => y, :game_id => id).last
   end
+
+  private
+
   
   def populate_game!
     #white pieces
@@ -48,15 +49,5 @@ class Game < ApplicationRecord
     return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
     return true
   end
-
   
-  def get_piece_at(x,y)
-    return Piece.where(:x => x, :y => y, :game_id => id).last
-  end
-  
-  def is_occupied?(x, y)
-    return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
-    return true
-
-  end
 end

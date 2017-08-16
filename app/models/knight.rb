@@ -1,7 +1,6 @@
 class Knight < Piece
 
-  def image_piece
+  def unicode_point
     color == 'white' ? '&#9816' : '&#9822'
   end
-
 end
