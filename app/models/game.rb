@@ -11,10 +11,6 @@ class Game < ApplicationRecord
     return Piece.where(:x => x, :y => y, :game_id => id).first
   end
 
-  def render_piece(piece)
-    piece.color + " " + piece.type
-  end
-
   private
   
   def populate_game!
