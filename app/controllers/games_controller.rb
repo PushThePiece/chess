@@ -16,10 +16,10 @@ class GamesController < ApplicationController
   end
 
   def update
-    # new_player = current_user
+    new_player = current_user
     @game = Game.find_by_id(params[:id])
     return render_not_found if @game.blank? 
-    @game.update_attributes(game_params)
+    @game.update_attributes(white: new_player)
     # if @game.valid?
     #   @game.populate_game!
     #   redirect_to games_path
@@ -41,8 +41,7 @@ class GamesController < ApplicationController
   end
     
   def game_params
-
-    params.require(:game).permit(:white)
+    params.require(:game).permit(:white, :black)
   end
 
   def game

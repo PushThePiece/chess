@@ -7,8 +7,9 @@ FactoryGirl.define do
   password_confirmation "secretPassword"
   end
 
-  # factory :game do
-    
-  # end
+  factory :game do
+    black_user_id 1
+    white_user_id 1
+  end
 
 end
