@@ -58,6 +58,11 @@ class Piece < ApplicationRecord
       return nil
     end
   end
+  
+  def valid_move?(dest_x, dest_y)
+    return false if dest_x > 8 || dest_y > 8 || dest_x < 1 || dest_y < 1
+    return true
+  end
 
   def is_horizontal?(_dest_x, dest_y)
     return y == dest_y
@@ -113,5 +118,4 @@ class Piece < ApplicationRecord
 
     alg
   end
-
 end
