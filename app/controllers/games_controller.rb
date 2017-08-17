@@ -1,6 +1,8 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
   helper_method :game
+  attr_accessor :white
+  
 
   def index
     @game = Game.all
@@ -11,24 +13,22 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(black: current_user, white: current_user)
+    @game = Game.create(black: current_user)
     # Game.create(black: User.last, white: User.last) works in console  
   end
 
   def update
+    # new_player = current_user
     @game = Game.find_by_id(params[:id])
-    @game.update_attributes(game_params.merge(white: current_user))
-    # if @game.white_user_id.present?
-    #   black_user_id = user.id
+    return render_not_found if @game.blank? 
+    @game.update_attributes(game_params)
+    # if @game.valid?
+    #   @game.populate_game!
+    #   redirect_to games_path
     # else
-    #   white_user_id = user.id
-    # end
-    if @game.valid?
-      @game.populate_game!
-      redirect_to games_path
-    else
-      render :new, status: :unprocessable_entity
-    end  
+    #   render :new, status: :unprocessable_entity
+    # end 
+     
   end
 
   def show
@@ -39,10 +39,10 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:black, :white)
+    params.require(:game).permit(:white)
   end
 
-  def game
-    @game ||= Game.where(id: params[:id]).last
-  end
+  # def game
+  #   @game ||= Game.where(id: params[:id]).last
+  # end
 end

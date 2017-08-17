@@ -77,23 +77,29 @@ RSpec.describe GamesController, type: :controller do
     
       game = Game.last
       
-      expect(game.white).to eq(user1)
+      expect(game.white).to eq(nil)
       expect(game.black).to eq(user1)
       
     end
+  end
 
+  describe "games#update action" do
     it "should allow a second player to join a game" do
       user1 = FactoryGirl.create(:user)
       sign_in user1
-      game = FactoryGirl.create(:game)
-      
+      # game = FactoryGirl.create(:game)
+      post :create, params: { game: {black: user1, white: user1} }
+      # game.reload
+      #<Game id: 665, white_user_id: nil, black_user_id: 810>
+
       user2 = FactoryGirl.create(:user)
       sign_in user2
-
-      post :update, params: { id: game.id {white: user2 } }
-      # expect(game).to eq(Game.last)
-      # user2 = FactoryGirl.create(:user)
-      # sign_in user2
+      game = Game.last
+      post :update, params: { id: game.id, game: { white: user2 } }
+      game = Game.last
+      game.reload
+      expect(game.black).to eq(user1)
+      # expect(game.white).to eq(user2)
       # expect(response).to redirect_to game_path
     end
   end
