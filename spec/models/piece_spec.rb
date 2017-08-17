@@ -1,5 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Piece, type: :model do
-  #pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe Piece, type: :Knight do
+  it "should successfully determine if a move is valid" do
+    g = Game.create
+    k = Knight.create(x: 3, y: 3, game: g)
+    expect(k.valid_move?(4,5)).to be(true)
+    expect(k.valid_move?(5,5)).to be(false)
+  end
 end
