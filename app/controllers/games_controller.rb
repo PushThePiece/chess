@@ -1,9 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
   helper_method :game
-  attr_accessor :white
   
-
   def index
     @game = Game.all
   end
@@ -42,7 +40,7 @@ class GamesController < ApplicationController
     params.require(:game).permit(:white)
   end
 
-  # def game
-  #   @game ||= Game.where(id: params[:id]).last
-  # end
+  def game
+    @game ||= Game.where(id: params[:id]).last
+  end
 end
