@@ -6,22 +6,15 @@ class GamesController < ApplicationController
     @game = Game.all
   end
 
-  def new
-    @game = Game.new 
-  end
-
   def create
-    Game.create(black: current_user)
+    @game = Game.create(black: current_user)
   end
 
   def update
-    Game.update(white: current_user)
-    # if @game.valid?
-    # @game.populate_game!
-    # redirect_to games_path
-    # else
-      # render :new, status: :unprocessable_entity
-    # end  
+    new_player = current_user
+    @game = current_game.update_attributes(white: new_player) 
+    # @place.comments.create(comment_params.merge(user: current_user))
+  
   end
 
   def show
@@ -39,7 +32,7 @@ class GamesController < ApplicationController
     params.require(:game).permit(:white, :black)
   end
 
-  def game
-    @game ||= Game.where(id: params[:id]).last
-  end
+  # def game
+  #   @game ||= Game.where(id: params[:id]).last
+  # end
 end

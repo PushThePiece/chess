@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+
+  attr_accessor :white_user_id
   after_create :populate_game!
   has_many :pieces
   
