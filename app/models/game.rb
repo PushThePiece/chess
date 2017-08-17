@@ -6,9 +6,6 @@ class Game < ApplicationRecord
     return Piece.where(:x => x, :y => y, :game_id => id).last
   end
 
-  private
-
-  
   def populate_game!
     #white pieces
     (1..8).each do |position|
