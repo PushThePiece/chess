@@ -11,22 +11,17 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(black: current_user)
-    # Game.create(black: User.last, white: User.last) works in console  
+    Game.create(black: current_user)
   end
 
   def update
-    new_player = current_user
-    @game = Game.find_by_id(params[:id])
-    return render_not_found if @game.blank? 
-    @game.update_attributes(white: new_player)
+    Game.update(white: current_user)
     # if @game.valid?
-    #   @game.populate_game!
-    #   redirect_to games_path
+    # @game.populate_game!
+    # redirect_to games_path
     # else
-    #   render :new, status: :unprocessable_entity
-    # end 
-     
+      # render :new, status: :unprocessable_entity
+    # end  
   end
 
   def show
