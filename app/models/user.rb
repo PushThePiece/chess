@@ -5,5 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :games 
+  # has_many :challenged_games, class_name: "Game", foreign_key: "black_user_id"
+  
+
 
 end

@@ -8,24 +8,25 @@ class GamesController < ApplicationController
   end
 
   def new
-    @game = Game.new
+    @game = Game.new 
   end
 
   def create
-    # Game.create_game(game_params)
-    # redirect_to games_path
-    # new_player = game_params(current_user)
-    @game = Game.create(black: current_user, white: current_user)
-    if @game.valid?
-      redirect_to game_path(@game)
-    else
-      render :new, status: :unprocessable_entity
-    end  
+    @game = Game.create()  
   end
 
   def join
-    @game.populate_game!
-    redirect_to games_path
+    if @game.white_user_id.present?
+      black_user_id = user.id
+    else
+      white_user_id = user.id
+    end
+    if @game.valid?
+      @game.populate_game!
+      redirect_to games_path
+    else
+      render :new, status: :unprocessable_entity
+    end  
   end
 
   def show
@@ -36,8 +37,8 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:black)
-    params.require(:game).permit(:white_user_id, :black_user_id)
+    # params.require(:game).permit(:black)
+    params.require(:game).permit(:black, :white)
   end
 
   # def game
