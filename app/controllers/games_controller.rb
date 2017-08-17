@@ -7,14 +7,13 @@ class GamesController < ApplicationController
   end
 
   def create
+    # new_player = game_params(white: current_user)
     @game = Game.create(black: current_user)
   end
 
   def update
     new_player = current_user
-    @game = current_game.update_attributes(white: new_player) 
-    # @place.comments.create(comment_params.merge(user: current_user))
-  
+    @game = current_game.update(game_params.merge(white: new_player)) 
   end
 
   def show

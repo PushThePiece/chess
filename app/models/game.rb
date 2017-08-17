@@ -1,12 +1,19 @@
 class Game < ApplicationRecord
 
-  attr_accessor :white_user_id
   after_create :populate_game!
   has_many :pieces
   
   belongs_to :white, class_name: "User", foreign_key: "white_user_id", optional: true
   belongs_to :black, class_name: "User", foreign_key: "black_user_id", optional: true
 
+  # def self.for_white(user)
+  #   if game.white = nil
+  #     game.white = user
+  #   else
+  #     game.white = "not working"
+  #   end
+  # end
+    
   def get_piece_at(x,y)
     return Piece.where(:x => x, :y => y, :game_id => id).last
   end

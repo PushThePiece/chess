@@ -23,3 +23,8 @@ width:80px;
 #chess_board tr:nth-child(even) td:nth-child(odd) {
 background:#000000;
 }
+
+.navbar-brand {
+  letter-spacing: 1px;
+  font-size: 30px;
+}
