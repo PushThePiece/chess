@@ -1,12 +1,12 @@
 <table id="chess_board" cellpadding="0" cellspacing="0">
-  <% (1...8).each do |x| %>
+  <% (1..8).each do |y| %>
     <tr>
-      <% (1...8).each do |y| %>
+      <% (1..8).each do |x| %>
         <td>
           <% piece = @game.get_piece_at(x, y) %>
           <% if !piece.nil? %>
-              <a href="#"><%= @game.render_piece(piece) %></a>
-            <% end %>
+              <a href="#"><%= piece.unicode_point.html_safe %></a>
+          <% end %>
         </td>
       <% end %>
     </tr>
