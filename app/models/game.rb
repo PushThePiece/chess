@@ -4,7 +4,11 @@ class Game < ApplicationRecord
   
   belongs_to :white, class_name: "User", foreign_key: "white_user_id", optional: true
   belongs_to :black, class_name: "User", foreign_key: "black_user_id", optional: true
-  
+
+  def get_piece_at(x,y)
+    return Piece.where(:x => x, :y => y, :game_id => id).last
+  end
+
   def populate_game!
     #white pieces
     (1..8).each do |position|
@@ -45,15 +49,5 @@ class Game < ApplicationRecord
     return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
     return true
   end
-
   
-  def get_piece_at(x,y)
-    return Piece.where(:x => x, :y => y, :game_id => id).last
-  end
-  
-  def is_occupied?(x, y)
-    return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
-    return true
-
-  end
 end

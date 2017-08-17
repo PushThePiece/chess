@@ -30,13 +30,18 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
+    @game = current_game
   end
 
 
   private
 
+  def current_game
+    Game.where(id: params[:id]).last
+  end
+    
   def game_params
+
     params.require(:game).permit(:white)
   end
 

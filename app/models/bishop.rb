@@ -1,6 +1,7 @@
 class Bishop < Piece
   
-  def image_piece
+
+  def unicode_point
     color == 'white' ? '&#9815' : '&#9821'
   end
 end
