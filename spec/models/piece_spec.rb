@@ -16,7 +16,8 @@ RSpec.describe Piece, type: :Bishop do
     expect(b.valid_move?(4,2)).to be(true)
     expect(b.valid_move?(5,4)).to be(false)
   end
-  
+end
+
 RSpec.describe Piece, type: :Rook do
   it "should successfully determine if the Rook's move is valid" do
     g = Game.create
