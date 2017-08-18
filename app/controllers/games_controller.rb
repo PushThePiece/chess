@@ -7,7 +7,6 @@ class GamesController < ApplicationController
   end
 
   def create
-    # new_player = game_params(white: current_user)
     @game = Game.create(black: current_user, white: current_user)
   end
 
@@ -31,7 +30,4 @@ class GamesController < ApplicationController
     params.require(:game).permit(:white, :black)
   end
 
-  # def game
-  #   @game ||= Game.where(id: params[:id]).last
-  # end
 end
