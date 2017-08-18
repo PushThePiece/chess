@@ -9,7 +9,6 @@ RSpec.describe Piece, type: :Knight do
   end
 end
 
-
 RSpec.describe Piece, type: :Bishop do
   it "should successfully determine if the bishop's move is valid" do
     g = Game.create
@@ -18,7 +17,7 @@ RSpec.describe Piece, type: :Bishop do
     expect(b.valid_move?(5,4)).to be(false)
   end
 end
-  
+
 RSpec.describe Piece, type: :Rook do
   it "should successfully determine if the Rook's move is valid" do
     g = Game.create
@@ -27,6 +26,14 @@ RSpec.describe Piece, type: :Rook do
     expect(r.valid_move?(1,5)).to be(true)
     expect(r.valid_move?(3,1)).to be(true)
     expect(r.valid_move?(5,5)).to be(false)
+  end  
+end
+
+RSpec.describe Piece do
+  it "should successfully validate position in the piece table" do
+    g = Game.create
+    k = Knight.create(x: 10, y: 4, color: "white", game: g)
+    expect(k.valid?).to be(false)
   end
 end
-  
+
