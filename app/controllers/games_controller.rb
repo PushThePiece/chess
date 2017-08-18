@@ -8,7 +8,7 @@ class GamesController < ApplicationController
 
   def create
     # new_player = game_params(white: current_user)
-    @game = Game.create(black: current_user)
+    @game = Game.create(black: current_user, white: current_user)
   end
 
   def update
