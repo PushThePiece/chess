@@ -25,6 +25,13 @@ RSpec.describe Piece, type: :Rook do
     expect(r.valid_move?(1,5)).to be(true)
     expect(r.valid_move?(3,1)).to be(true)
     expect(r.valid_move?(5,5)).to be(false)
+  end  
+end
+
+RSpec.describe Piece do
+  it "should successfully validate position in the piece table" do
+    g = Game.create
+    k = Knight.create(x: 10, y: 4, color: "white", game: g)
+    expect(k.valid?).to be(false)
   end
-  
 end

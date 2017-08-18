@@ -4,6 +4,10 @@ class Piece < ApplicationRecord
 
   belongs_to :game
 
+  validates :color, inclusion: { in: ['white', 'black'] }, :allow_nil => true
+  validates :x, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
+  validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
+
   def move_to!(new_x, new_y)
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y)
