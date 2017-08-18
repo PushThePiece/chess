@@ -9,14 +9,28 @@
   </head>
 
   <body>
-  
+    <nav class="navbar navbar-inverse bg-inverse">
+      <div class="top-nav">
+        <div class="navbar-brand float-left">
+            PushthePiece
+        </div>
+        <div class="admin float-right">
+          <% if current_user %>
+            <%= link_to "New Game", games_path(@game), method: :post %>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+          <% else %>
+            <%= link_to "Sign In", new_user_session_path %>
+            <%= link_to "Sign Up", new_user_registration_path %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
     <% if notice.present? %>
       <p class="notice"><%= notice %></p>
     <% end %>
     <% if alert.present? %>
       <p class="alert"><%= alert %></p>
     <% end %>
-
     <%= yield %>
   </body>
 </html>
