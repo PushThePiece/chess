@@ -12,8 +12,8 @@ RSpec.describe PiecesController, type: :controller do
   it "should successfully move to a new square" do
     game = Game.create
 
-    piece1 = Piece.create(x: 3, y: 3, game: game, color: "White")
-    piece2 = Piece.create(x: 3, y: 6, game: game, color: "Black")
+    piece1 = Piece.create(x: 3, y: 3, game: game, color: "white")
+    piece2 = Piece.create(x: 3, y: 6, game: game, color: "black")
     piece1.move_to!(3,6)
     piece1.reload
     piece2.reload
