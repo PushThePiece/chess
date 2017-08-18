@@ -22,5 +22,14 @@ RSpec.describe PiecesController, type: :controller do
     expect(piece2.captured?).to eq(true)
   end
 
+  it "should successfully validate the color field" do
+    piece = Piece.create(x: nil, y: nil, game: Game.new, color: "purple")
+    expect(piece.valid?).to eq(false)
+  end
+
+  it "should successfully validate the location to be on the board" do
+    piece = Piece.create(x: 10, y: 10, game: Game.new, color: "black")
+    expect(piece.valid?).to eq(false)
+  end
 
 end
