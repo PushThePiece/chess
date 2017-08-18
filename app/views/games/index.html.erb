@@ -1,3 +1,9 @@
 <h1>Welcome to Chess</h1>
 
+<%= @game.each do |game| %>
+  <%= game.inspect %>
+<% end %>
+
+<%= link_to "New Game", games_path(@game), method: :post %>
+
 
