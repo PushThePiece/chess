@@ -68,7 +68,7 @@ RSpec.describe GamesController, type: :controller do
       
       expect(game.white).to eq(user1)
       expect(game.black).to eq(user1)
-      
+      expect(response).to redirect_to game_path(game.id)
     end
   end
 

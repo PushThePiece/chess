@@ -8,6 +8,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(black: current_user, white: current_user)
+    redirect_to game_path(@game)
   end
 
   def update

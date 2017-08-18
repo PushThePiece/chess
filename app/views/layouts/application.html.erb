@@ -16,7 +16,6 @@
         </div>
         <div class="admin float-right">
           <% if current_user %>
-            <%= link_to "New Game", games_path(@game), method: :post %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
           <% else %>
             <%= link_to "Sign In", new_user_session_path %>
