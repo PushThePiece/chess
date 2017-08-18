@@ -4,7 +4,7 @@
       <% (1..8).each do |x| %>
         <td>
           <% piece = @game.get_piece_at(x, y) %>
-          <% if !piece.nil? %>
+          <% if piece.present? %>
               <a href="#"><%= piece.unicode_point.html_safe %></a>
           <% end %>
         </td>
