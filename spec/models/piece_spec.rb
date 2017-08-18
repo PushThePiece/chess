@@ -36,6 +36,13 @@ RSpec.describe Piece, type: :Pawn do
     expect(p.valid_move?(2,4)).to be(true)
     expect(p.valid_move?(2,5)).to be(false)
   end
+
+  it "should successfully determine if the pawn capture is valid" do
+    g = Game.create
+    p = Pawn.create(x: 2, y: 2, game: g)
+    q = Queen.create(x: 3, y: 3, game: g)
+    expect(p.valid_move?(2,3)).to be(true)
+  end
 end
 
 RSpec.describe Piece do
