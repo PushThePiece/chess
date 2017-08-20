@@ -1,1 +1,13 @@
-<h1>Welcome to Chess</h1>
+<div class="col-12">
+  <h1>Welcome to Chess</h1>
+  <%= link_to "New Game", games_path(@game), method: :post %>
+  <br/>
+  <br/>
+  <h2>All Games</h2>
+  <%= @game.each do |game| %>
+    <%= game.inspect %>
+  <% end %>
+</div>
+
+
+

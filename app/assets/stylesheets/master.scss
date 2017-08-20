@@ -1,6 +1,6 @@
 @import "bootstrap";
 
-a {
+#chess_board a {
 color:#000000;
 display:block;
 font-size:60px;
@@ -22,4 +22,9 @@ width:80px;
 #chess_board tr:nth-child(odd) td:nth-child(even),
 #chess_board tr:nth-child(even) td:nth-child(odd) {
 background:#000000;
+}
+
+.navbar-brand {
+  letter-spacing: 1px;
+  font-size: 30px;
 }

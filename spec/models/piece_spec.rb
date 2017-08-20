@@ -52,3 +52,4 @@ RSpec.describe Piece do
     expect(k.valid?).to be(false)
   end
 end
+
