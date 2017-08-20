@@ -33,6 +33,9 @@ RSpec.describe Piece, type: :Pawn do
   it "should successfully determine if the pawn's move is valid" do
     g = Game.create
     p = Pawn.create(x: 2, y: 2, game: g)
+    kn = Knight.create(x: 2, y: 3, game: g)
+    expect(p.valid_move?(2,4)).to be(false)
+    kn.move_to!(3,5)
     expect(p.valid_move?(2,4)).to be(true)
     expect(p.valid_move?(2,5)).to be(false)
   end
