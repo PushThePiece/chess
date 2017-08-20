@@ -1,5 +1,14 @@
+
 <br/>
   <div class="col-12">
-    <h1>Index</h1>
+  <h1>Welcome to Push the Pawn Chess App!</h1>
+<% if @games.present? %>
+    <h2> <%= @games.game_id %> </h2>
+    <% else %>
+    <h2>No Games Available :(...</h2>
+    <% end %>
+  </div>
+
+   <div class="col-12">
     <%= link_to "Play", games_path %>
   </div>

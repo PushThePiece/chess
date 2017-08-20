@@ -17,8 +17,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.create
-    #@game = current_game
+    #@game = Game.create
+    @game = current_game
   end
 
 
