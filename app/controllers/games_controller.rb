@@ -2,12 +2,12 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @game = Game.all
+    @games = Game.all
   end
 
   def create
-    @game = Game.create
-    redirect_to games_path
+    @game = Game.create(white_user_id: current_user)
+    redirect_to game_path(@game)
   end
 
   def update
