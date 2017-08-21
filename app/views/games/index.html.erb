@@ -1,11 +1,19 @@
 <div class="col-12">
   <h1>Welcome to Chess</h1>
-  <%= link_to "New Game", games_path(@game), method: :post %>
+  <%= link_to "New Game", games_path, method: :post %>
   <br/>
   <br/>
-  <h2>All Games</h2>
-  <%= @game.each do |game| %>
-    <%= game.inspect %>
+  <h2>Current Games</h2>
+  <table class = "table">
+  <% @games.each do |game| %>
+    <tr>
+      <td>Game id: <%= game.id %></td>
+      <td>
+        <% if game.white_user_id.nil? || game.black_user_id.nil? %>
+          <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button", :method => :put %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
 </div>
 
