@@ -1,5 +1,5 @@
 class PiecesController < ApplicationController
-    def show
+  def show
     @piece = Piece.find(params[:id])
     @current_game = current_game
     redirect_to game_path(@piece.game)
