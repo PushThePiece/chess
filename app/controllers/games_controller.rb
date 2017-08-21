@@ -6,13 +6,14 @@ class GamesController < ApplicationController
   end
 
   def create
-    p 'CURRENT USER', current_user
     @game = Game.create(white_user_id: current_user.id)
+    flash[:alert] = "Waiting for another player to join game."
     redirect_to game_path(@game)
   end
 
   def update
     current_game.update_attributes(black_user_id: current_user.id)
+    flash[:alert] = "Let's play!"
     redirect_to game_path(current_game.id)
   end
 
