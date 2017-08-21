@@ -12,7 +12,8 @@ class GamesController < ApplicationController
   end
 
   def update
-
+    current_game.update_attributes(black_user_id: current_user.id)
+    redirect_to game_path(current_game.id)
   end
 
   def show

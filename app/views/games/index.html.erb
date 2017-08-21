@@ -10,7 +10,7 @@
       <td>Game id: <%= game.id %></td>
       <td>
         <% if game.white_user_id.nil? || game.black_user_id.nil? %>
-          <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button" %>
+          <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button", :method => :put %>
         <% end %>
       </td>
     </tr>
