@@ -7,7 +7,7 @@
         <td>
           <% piece = @game.get_piece_at(x, y) %>
           <% if piece.present? %>
-              <a href="#"><%= piece.unicode_point.html_safe %></a>
+        <%= link_to piece.unicode_point.html_safe, piece_path(piece) %> 
           <% end %>
         </td>
       <% end %>
