@@ -6,7 +6,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(white_user_id: current_user)
+    p 'CURRENT USER', current_user
+    @game = Game.create(white_user_id: current_user.id)
     redirect_to game_path(@game)
   end
 
