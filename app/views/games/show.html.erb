@@ -1,7 +1,11 @@
 <script>
   $(function(){
-    // $('#chess_board a').hide('slow');
-    $('#chess_board a').sortable({});
+    // $('.piece').hide('slow');
+    $('.piece').sortable({
+      update: function( event, ui ) {
+        alert(ui.item.index());
+      }
+    });
   });
 </script>
 
@@ -12,10 +16,11 @@
     <tr>
       <% (1..8).each do |x| %>
         <td>
-          <% piece = @game.get_piece_at(x, y) %>
+          <div class="piece" = <% piece = @game.get_piece_at(x, y) %>>
           <% if piece.present? %>
-            <%= link_to piece.unicode_point.html_safe, piece_path(piece) %>
-          <% end %>
+           <%= link_to piece.unicode_point.html_safe, piece_path(piece)%> 
+          <% end %> 
+          
         </td>
       <% end %>
     </tr>
