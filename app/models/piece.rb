@@ -9,21 +9,21 @@ class Piece < ApplicationRecord
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
 
   def move_to!(new_x, new_y)
+    
+    return false if valid_move?(new_x, new_y) == false #invalid move
+
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y)
     else
       target_piece = game.get_piece_at(new_x, new_y)
-      if target_piece.color == self.color
-        # raise error
-      else
-        if target_piece.type == "King"
-          # opponent is in check
-          # cannot capture the king
-          # raise error
-        else
-          target_piece.remove_from_game!
-          update_attributes(:x => new_x, :y => new_y)
-        end
+      
+      return false if target_piece.color == self.color #can't move to square with piece of own color
+      
+      return false if target_piece.type == "King" #can't capture the opponent's king
+      # this should never happen because they should have moved out of check last turn
+      
+      target_piece.remove_from_game!
+      update_attributes(:x => new_x, :y => new_y)
       end
     end
   end
@@ -61,11 +61,6 @@ class Piece < ApplicationRecord
       puts "Invalid destination square in is_obstructed?"
       return nil
     end
-  end
-  
-  def valid_move?(dest_x, dest_y)
-    return false if dest_x > 8 || dest_y > 8 || dest_x < 1 || dest_y < 1
-    return true
   end
 
   def is_horizontal?(_dest_x, dest_y)
