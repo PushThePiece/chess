@@ -8,7 +8,7 @@ class Piece < ApplicationRecord
   validates :x, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
 
-  def move_to!(new_x, new_y)
+  def move_to!(new_x, new_y) # return value of false indicates an error occurred
     
     return false if valid_move?(new_x, new_y) == false #invalid move
 
