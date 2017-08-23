@@ -24,16 +24,15 @@ class Piece < ApplicationRecord
       
       target_piece.remove_from_game!
       update_attributes(:x => new_x, :y => new_y)
-      end
+      return true
+      
     end
   end
   
-  def is_obstructed?(dest_x, dest_y)
+  def valid_move?(dest_x, dest_y)
+  end
 
-    if is_adjacent?(dest_x, dest_y)
-      puts "Invalid destination square in is_obstructed: adjacent square"
-      return nil
-    end
+  def is_obstructed?(dest_x, dest_y)
 
     if is_horizontal?(dest_x, dest_y)
       range = (x < dest_x) ? (x+1...dest_x) : (dest_x+1...x)
@@ -56,10 +55,6 @@ class Piece < ApplicationRecord
         return true if game.is_occupied?(x+range_x[i], y+range_y[i])
       end
       return false
-
-    else
-      puts "Invalid destination square in is_obstructed?"
-      return nil
     end
   end
 
@@ -117,4 +112,5 @@ class Piece < ApplicationRecord
 
     alg
   end
+
 end

@@ -4,10 +4,9 @@ class Rook < Piece
     color == 'white' ? '&#9814' : '&#9820'
   end
 
-  def valid_move?(x, y)
-    #assumes valid_move? in piece.rb has been verified prior to this step
+  def valid_move?(dest_x, dest_y)
     return false if is_obstructed?(dest_x, dest_y)
-    is_horizontal?(x, y) || is_vertical?(x, y)
+    is_horizontal?(dest_x, dest_y) || is_vertical?(dest_x, dest_y)
   end
 
 end
