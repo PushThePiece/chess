@@ -29,6 +29,9 @@ RSpec.describe Piece do
     it "should successfully capture opponent's piece" do
       k = Knight.create(x: 5, y: 5, color: "black", game: @g)
       expect(@b.move_to!(5,5)).to be(true)
+      expect(@g.get_piece_at(5,5).id).to eq(@b.id)
+      k.reload
+      expect(k.x).to eq(nil)
     end
   end
 end
