@@ -48,6 +48,15 @@ RSpec.describe Piece, type: :Pawn do
   end
 end
 
+RSpec.describe Piece, type: :Queen do
+  it "should successfully determine if the queen's move is valid" do
+    g = Game.create
+    q = Queen.create(x: 2, y: 3, game: g)
+    expect(q.valid_move?(5,3)).to be(true)
+    expect(q.valid_move?(3,5)).to be(false)
+  end
+end
+
 RSpec.describe Piece do
   it "should successfully validate position in the piece table" do
     g = Game.create
@@ -55,4 +64,3 @@ RSpec.describe Piece do
     expect(k.valid?).to be(false)
   end
 end
-
