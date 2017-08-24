@@ -2,7 +2,12 @@
   $(function(){
     // $('.piece').hide('slow');
     $('.piece').draggable();
-
+      console.log("moved");
+      $('.cell').droppable( {
+        drop: function ( event, ui ) {
+          console.log("dropped");
+        }
+      });
       // start: function(event, ui) {
         // ui.item.parent().data());                              => y: 1, x: 8
         // console.log(ui.item.parent().data()); 
@@ -10,8 +15,6 @@
         // console.log("x " + ui.item.parent().data('x') + " y " + ui.item.parent().data('y'));
         // console.log(ui.item.parent().data());
         // console.log(ui.item.data('x'));
-       
-      
   });
 
   //AJAX PUT
@@ -40,12 +43,11 @@
         <td class="cell"
             data-x="<%= x %>" 
             data-y="<%= y %>" >
-          <% if piece.present? %> 
-            <div class="piece" >
-          <% end %>
           <% if piece.present? %>
+          <div class="piece" >
             <%= link_to piece.unicode_point.html_safe, piece_path(piece)%> 
-          <% end %> 
+          </div>
+          <% end %>  
         </td>
       <% end %>
     </tr>
