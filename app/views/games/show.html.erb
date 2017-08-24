@@ -2,25 +2,46 @@
   $(function(){
     // $('.piece').hide('slow');
     $('.piece').sortable({
-      update: function( event, ui ) {
-        alert(ui.item.index());
+      start: function(event, ui) {
+        // ui.item.parent().data());                              => y: 1, x: 8
+        // console.log(ui.item.parent().data()); 
+        // ui.item.parent().data('x'))                            => 8, 7, etc.
+        // console.log("x " + ui.item.parent().data('x') + " y " + ui.item.parent().data('y'));
+        console.log(ui.item.parent().data());
+        console.log(ui.item.index());
       }
     });
   });
+  //AJAX PUT
+    // open(method,url,async,user,psw) Specifies the request
+      // method: the request type GET or POST
+      // url: the file location
+      // async: true (asynchronous) or false (synchronous)
+      // user: optional user name
+      // psw: optional password
+
+// example
+       // $.ajax({
+       //    type: 'PUT',
+       //    url: ui.item.data('update-url'),
+       //    dataType: 'json',
+       //    data: { section: { row_order_position: ui.item.index()
+
 </script>
 
 <%= "Hello #{current_user.email} you are playing #{@game.inspect}"%>
-
+<!--y rows needs reversed to go up instead of down-->
 <table id="chess_board" cellpadding="0" cellspacing="0">
-  <% (1..8).each do |y| %>
-    <tr>
+  <% (1..8).each do |y| %> 
+    <tr> 
       <% (1..8).each do |x| %>
-        <td>
-          <div class="piece" = <% piece = @game.get_piece_at(x, y) %>>
+        <% piece = @game.get_piece_at(x, y) %>
+        <td class="piece"
+            data-x="<%= x %>" 
+            data-y="<%= y %>" >
           <% if piece.present? %>
-           <%= link_to piece.unicode_point.html_safe, piece_path(piece)%> 
+            <%= link_to piece.unicode_point.html_safe, piece_path(piece)%>
           <% end %> 
-          
         </td>
       <% end %>
     </tr>

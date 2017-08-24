@@ -1,7 +1,5 @@
 
 class Piece < ApplicationRecord
-
-
   belongs_to :game
 
   validates :color, inclusion: { in: ['white', 'black'] }, :allow_nil => true
