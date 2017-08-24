@@ -2,36 +2,23 @@
   $(function(){
     // $('.piece').hide('slow');
     $('.piece').draggable();
-      console.log("moved");
-      $('.cell').droppable( {
-        drop: function ( event, ui ) {
-          console.log("dropped");
+      // console.log("moved");
+      var newCell = $('.cell').droppable( {
+        drop: function ( event, ui ) { 
+          // piece url // 
+          var pieceUrl = ui.draggable.context.href;
+          // where piece originated //
+          var prevCell = ui.draggable.parent().data();
+          var prevX = prevCell.x;
+          var prevY = prevCell.y;
+          // where piece is going //
+          var newCellX = (event.target.attributes[1].nodeValue);
+          var newCellY = (event.target.attributes[2].nodeValue)
+          
+          console.log( "has been moved from x: " + prevX + " y: " + prevY + " and is moving to x: " + newCellX + " y: " + newCellY + ""); 
         }
       });
-      // start: function(event, ui) {
-        // ui.item.parent().data());                              => y: 1, x: 8
-        // console.log(ui.item.parent().data()); 
-        // ui.item.parent().data('x'))                            => 8, 7, etc.
-        // console.log("x " + ui.item.parent().data('x') + " y " + ui.item.parent().data('y'));
-        // console.log(ui.item.parent().data());
-        // console.log(ui.item.data('x'));
-  });
-
-  //AJAX PUT
-    // open(method,url,async,user,psw) Specifies the request
-      // method: the request type GET or POST
-      // url: the file location
-      // async: true (asynchronous) or false (synchronous)
-      // user: optional user name
-      // psw: optional password
-
-// example
-       // $.ajax({
-       //    type: 'PUT',
-       //    url: ui.item.data('update-url'),
-       //    dataType: 'json',
-       //    data: { section: { row_order_position: ui.item.index()
-
+    });
 </script>
 
 <%= "Hello #{current_user.email} you are playing #{@game.inspect}"%>
@@ -40,13 +27,9 @@
     <tr> 
       <% (1..8).each do |x| %>
         <% piece = @game.get_piece_at(x, y) %>
-        <td class="cell"
-            data-x="<%= x %>" 
-            data-y="<%= y %>" >
+        <td class="cell" data-x="<%= x %>" data-y="<%= y %>" >
           <% if piece.present? %>
-          <div class="piece" >
-            <%= link_to piece.unicode_point.html_safe, piece_path(piece)%> 
-          </div>
+            <%= link_to piece.unicode_point.html_safe, piece_path(piece), :class => "piece" %> 
           <% end %>  
         </td>
       <% end %>
