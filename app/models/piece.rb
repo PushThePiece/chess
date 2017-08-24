@@ -8,32 +8,31 @@ class Piece < ApplicationRecord
   validates :x, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
 
-  def move_to!(new_x, new_y)
+  def move_to!(new_x, new_y) # return value of false indicates an error occurred
+    
+    return false if valid_move?(new_x, new_y) == false #invalid move
+
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y)
     else
       target_piece = game.get_piece_at(new_x, new_y)
-      if target_piece.color == self.color
-        # raise error
-      else
-        if target_piece.type == "King"
-          # opponent is in check
-          # cannot capture the king
-          # raise error
-        else
-          target_piece.remove_from_game!
-          update_attributes(:x => new_x, :y => new_y)
-        end
-      end
+      
+      return false if target_piece.color == self.color #can't move to square with piece of own color
+      
+      return false if target_piece.type == "King" #can't capture the opponent's king
+      # this should never happen because they should have moved out of check last turn
+      
+      target_piece.remove_from_game!
+      update_attributes(:x => new_x, :y => new_y)
+      return true
+      
     end
   end
   
-  def is_obstructed?(dest_x, dest_y)
+  def valid_move?(dest_x, dest_y)
+  end
 
-    if is_adjacent?(dest_x, dest_y)
-      puts "Invalid destination square in is_obstructed: adjacent square"
-      return nil
-    end
+  def is_obstructed?(dest_x, dest_y)
 
     if is_horizontal?(dest_x, dest_y)
       range = (x < dest_x) ? (x+1...dest_x) : (dest_x+1...x)
@@ -56,16 +55,7 @@ class Piece < ApplicationRecord
         return true if game.is_occupied?(x+range_x[i], y+range_y[i])
       end
       return false
-
-    else
-      puts "Invalid destination square in is_obstructed?"
-      return nil
     end
-  end
-  
-  def valid_move?(dest_x, dest_y)
-    return false if dest_x > 8 || dest_y > 8 || dest_x < 1 || dest_y < 1
-    return true
   end
 
   def is_horizontal?(_dest_x, dest_y)
@@ -122,4 +112,5 @@ class Piece < ApplicationRecord
 
     alg
   end
+
 end
