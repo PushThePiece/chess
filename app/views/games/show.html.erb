@@ -1,24 +1,27 @@
 <script>
   $(function(){
-    // $('.piece').hide('slow');
-    $('.piece').draggable();
-      // console.log("moved");
-      var newCell = $('.cell').droppable( {
-        drop: function ( event, ui ) { 
-          // piece url // 
-          var pieceUrl = ui.draggable.context.href;
-          // where piece originated //
-          var prevCell = ui.draggable.parent().data();
-          var prevX = prevCell.x;
-          var prevY = prevCell.y;
-          // where piece is going //
-          var newCellX = (event.target.attributes[1].nodeValue);
-          var newCellY = (event.target.attributes[2].nodeValue)
-          
-          console.log( "has been moved from x: " + prevX + " y: " + prevY + " and is moving to x: " + newCellX + " y: " + newCellY + ""); 
-        }
-      });
+    $('.piece').draggable( {
+      containment: '#chess_board',
+      snap: '.cell'
     });
+        
+    $('.cell').droppable( {
+      drop: function (event, ui) {
+      var newCellX = event.target.attributes[1].nodeValue;
+      var newCellY = event.target.attributes[2].nodeValue;
+      var pieceMovedUrl = ui.draggable[0].attributes[0].nodeValue;
+      console.log(newCellX);
+        $.ajax({
+          type: 'PUT',
+          url: pieceMovedUrl,
+          data: { piece: { x: newCellX, y: newCellY } },
+          success: function(){
+          console.log("item has moved in the database??");
+          }
+        });
+      }
+    });
+  });
 </script>
 
 <%= "Hello #{current_user.email} you are playing #{@game.inspect}"%>
@@ -29,7 +32,9 @@
         <% piece = @game.get_piece_at(x, y) %>
         <td class="cell" data-x="<%= x %>" data-y="<%= y %>" >
           <% if piece.present? %>
-            <%= link_to piece.unicode_point.html_safe, piece_path(piece), :class => "piece" %> 
+            <div data-update-url="<%=piece_path(piece)%>" class="piece">
+            <%= link_to piece.unicode_point.html_safe, piece_path(piece) %> 
+            </div>
           <% end %>  
         </td>
       <% end %>
