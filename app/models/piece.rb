@@ -13,8 +13,7 @@ class Piece < ApplicationRecord
     return false if valid_move?(new_x, new_y) == false #invalid move
 
     if game.is_occupied?(new_x, new_y) == false
-      update_attributes(:x => new_x, :y => new_y)
-      has_moved? = true
+      update_attributes(:x => new_x, :y => new_y, :has_moved? => true)
     else
       target_piece = game.get_piece_at(new_x, new_y)
       
@@ -24,8 +23,7 @@ class Piece < ApplicationRecord
       # this should never happen because they should have moved out of check last turn
       
       target_piece.remove_from_game!
-      update_attributes(:x => new_x, :y => new_y)
-      has_moved? = true
+      update_attributes(:x => new_x, :y => new_y, :has_moved? => true)
       return true
     end
   end
