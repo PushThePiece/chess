@@ -5,6 +5,7 @@ class Bishop < Piece
   end
 
   def valid_move?(dest_x,dest_y)
-    !is_obstructed?(dest_x, dest_y) && is_diagonal?(dest_x,dest_y)
+    super
+    is_diagonal?(dest_x,dest_y)
   end
 end

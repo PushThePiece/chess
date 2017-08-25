@@ -14,6 +14,7 @@ class Piece < ApplicationRecord
 
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y)
+      has_moved? = true
     else
       target_piece = game.get_piece_at(new_x, new_y)
       
@@ -24,12 +25,15 @@ class Piece < ApplicationRecord
       
       target_piece.remove_from_game!
       update_attributes(:x => new_x, :y => new_y)
+      has_moved? = true
       return true
-      
     end
   end
   
   def valid_move?(dest_x, dest_y)
+    if is_obstructed?(dest_x, dest_y)
+      return false
+    end
   end
 
   def is_obstructed?(dest_x, dest_y)
