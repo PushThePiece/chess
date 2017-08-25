@@ -7,17 +7,13 @@
         
     $('.cell').droppable( {
       drop: function (event, ui) {
-      var newCellX = event.target.attributes[1].nodeValue;
-      var newCellY = event.target.attributes[2].nodeValue;
-      var pieceMovedUrl = ui.draggable[0].attributes[0].nodeValue;
-      console.log(newCellX);
+      var newCellX = $(event.target).data('x');
+      var newCellY = $(event.target).data('x');
+      var pieceMovedUrl = ui.draggable.data('update-url');
         $.ajax({
           type: 'PUT',
           url: pieceMovedUrl,
-          data: { piece: { x: newCellX, y: newCellY } },
-          success: function(){
-          console.log("item has moved in the database??");
-          }
+          data: { piece: { x: newCellX, y: newCellY.y } },
         });
       }
     });
