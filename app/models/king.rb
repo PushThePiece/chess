@@ -6,14 +6,14 @@ class King < Piece
 
   def can_castle?(corner_pos_x, corner_pos_y)
 
-    return false if has_moved? || corner_pos_y != y
+    return false if has_moved?
 
     piece = game.get_piece_at(corner_pos_x,corner_pos_y)
     return false if piece.nil? || piece.type != "Rook" || piece.has_moved?
 
     obstr_range = (piece.x == 8) ? [6, 7] : [2,3,4]
     obstr_range.each { |sq| return false if game.is_occupied?(sq, y) }
-    
+
     return true
   end
 
