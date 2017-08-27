@@ -8,12 +8,12 @@
     $('.cell').droppable( {
       drop: function (event, ui) {
       var newCellX = $(event.target).data('x');
-      var newCellY = $(event.target).data('x');
+      var newCellY = $(event.target).data('y');
       var pieceMovedUrl = ui.draggable.data('update-url');
         $.ajax({
           type: 'PUT',
           url: pieceMovedUrl,
-          data: { piece: { x: newCellX, y: newCellY.y } },
+          data: { piece: { x: newCellX, y: newCellY } },
         });
       }
     });

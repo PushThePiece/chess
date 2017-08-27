@@ -69,5 +69,7 @@ gem "simple_form"
 
 gem 'jquery-ui-rails'
 
+gem 'omniauth-facebook'
 
+gem "figaro"
 
