@@ -28,6 +28,7 @@ class Piece < ApplicationRecord
     end
   end
   
+  # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
     if is_obstructed?(dest_x, dest_y)
       return false
