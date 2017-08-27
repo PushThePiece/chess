@@ -22,8 +22,8 @@ class Game < ApplicationRecord
     Bishop.create(game_id: id, x: 3, y: 1, color: 'white')
     Bishop.create(game_id: id, x: 6, y: 1, color: 'white')
 
-    King.create(game_id: id, x: 4, y: 1, color: 'white')
-    Queen.create(game_id: id, x: 5, y: 1, color: 'white')
+    Queen.create(game_id: id, x: 4, y: 1, color: 'white')
+    King.create(game_id: id, x: 5, y: 1, color: 'white')
 
     #black pieces
     (1..8).each do |position|
@@ -38,9 +38,9 @@ class Game < ApplicationRecord
 
     Bishop.create(game_id: id, x: 3, y: 8, color: 'black')
     Bishop.create(game_id: id, x: 6, y: 8, color: 'black')
-
-    King.create(game_id: id, x: 4, y: 8, color: 'black')
-    Queen.create(game_id: id, x: 5, y: 8, color: 'black')
+ 
+    Queen.create(game_id: id, x: 4, y: 8, color: 'black')
+    King.create(game_id: id, x: 5, y: 8, color: 'black')
   end
 
   def is_occupied?(x, y)
