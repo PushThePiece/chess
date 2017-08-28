@@ -1,6 +1,6 @@
 class Pawn < Piece
 
-  validates :passed_thru, presence: true, default: false
+  validates :passed_thru?, presence: true
 
   def unicode_point
     color == 'white' ? '&#9817' : '&#9823'
@@ -29,7 +29,7 @@ class Pawn < Piece
     # opponent's piece must be a pawn at correct location
     return false unless opp_piece.type == "pawn" && 
       opp_piece.color != color && 
-        opp_piece.passed_thru == true
+        opp_piece.passed_thru? == true
 
     return true
 
