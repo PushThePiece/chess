@@ -7,6 +7,9 @@ class Pawn < Piece
   end
 
   def valid_move?(dest_x,dest_y)
+    
+    # Clean this up!
+    # Determine if its a capture on either side
     return true if (dest_x == x+1 && dest_y == y+1 && game.is_occupied?(x+1, y+1) && game.get_piece_at(x+1, y+1).color != color)
       || (dest_x == x-1 && dest_y == y+1 && game.is_occupied(x-1, y+1 && game.get_piece_at(x-1, y+1).color != color))
 

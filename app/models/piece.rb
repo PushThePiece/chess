@@ -8,6 +8,7 @@ class Piece < ApplicationRecord
   validates :x, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
 
+  # Clean this up! Especially handling of passed_thru?
   def move_to!(new_x, new_y) # return value of false indicates an error occurred
     
     return false if valid_move?(new_x, new_y) == false #invalid move
@@ -17,7 +18,7 @@ class Piece < ApplicationRecord
       if type == "Pawn" && new_y == y+2
         update_attributes(passed_thru?: true)
       else
-        passed_thru?: false
+        passed_thru? = false
       end
     else
       target_piece = game.get_piece_at(new_x, new_y)
