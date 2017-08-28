@@ -14,6 +14,11 @@ class Piece < ApplicationRecord
 
     if game.is_occupied?(new_x, new_y) == false
       update_attributes(:x => new_x, :y => new_y, :has_moved? => true)
+      if type == "Pawn" && new_y == y+2
+        update_attributes(passed_thru: true)
+      else
+        passed_thru: false
+      end
     else
       target_piece = game.get_piece_at(new_x, new_y)
       
@@ -24,6 +29,8 @@ class Piece < ApplicationRecord
       
       target_piece.remove_from_game!
       update_attributes(:x => new_x, :y => new_y, :has_moved? => true)
+      update_attributes(passed_thru: false) if type == "Pawn"
+      
       return true
     end
   end
