@@ -1,5 +1,24 @@
 @import "bootstrap";
 
+body {
+  font-family: 'Anada', serif;
+  background-image: image_url('background.png');
+}
+
+body a {
+  color: black;
+}
+
+input {
+  font-family: 'Anada', serif;
+}
+
+.admin {
+  letter-spacing: 1px;
+  font-size: 20px;
+  font-family: 'Almendra', serif;
+}
+
 #chess_board a {
 color:#000000;
 display:block;
@@ -13,6 +32,8 @@ width:80px;
 
 #chess_board { 
   border:5px solid #333333; 
+  margin: auto;
+  width: 50% !important;
 }
 
 #chess_board td {
@@ -34,29 +55,6 @@ background:#000000;
   font-family: 'Almendra', serif;
 }
 
-
 .top-nav a {
   color: white;
-  /*font-size: 40px*/
 }
-
-.admin {
-  letter-spacing: 1px;
-  font-size: 20px;
-  font-family: 'Almendra', serif;
-}
-input {
-  font-family: 'Anada', serif;
-}
-
-body {
-  font-family: 'Anada', serif;
-}
-
-body a {
-  color: black;
-}
-
-/*h1, h2, {
-  font-family: 'Andada', serif;
-}*/
