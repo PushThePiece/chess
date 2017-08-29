@@ -1,14 +1,38 @@
 class King < Piece
 
-  def is_move_valid?(dest_x, dest_y) 
-    is_adjacent?(dest_x, dest_y)
+  def valid_move?(dest_x, dest_y) 
+    return true if is_adjacent?(dest_x, dest_y) && (!game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y))
+    return true if is_castle?(dest_x, dest_y) == "kingside" && can_castle(8, )
+    return false
+
   end
 
-  def move_to!(new_x, new_y)
+  def move_to!(dest_x, dest_y)
     super
+    if is_castle?(dest_x, dest_y)
+      coords = get_castling_corner(dest_x, dest_y)
+      if can_castle?(coords[0], coords[1])
+        castle!(coords[0], coords[1])
+
     update_attributes(:has_moved? => true) if has_moved? == false
   end
 
+  def is_castle?(dest_x, dest_y)
+    color_rank = (color=="white") ? 1 : 8
+    return (dest_x - x == 2 || x - dest_x == 2) && dest_y == color_rank
+  end
+
+  def get_castling_corner(dest_x, dest_y)
+    if dest_y == 1 && dest_x == 7
+      return [8,1]
+    elsif dest_y == 1 && dest_x == 3
+      return [1,1]
+    elsif dest_y == 8 && dest_x == 7
+      return [8,8]
+    elsif dest_y == 8 && dest_x == 3
+      return [8,1]
+    end
+  end
 
   def can_castle?(corner_pos_x, corner_pos_y)
 
@@ -23,20 +47,16 @@ class King < Piece
     return true
   end
 
-  def castle!(is_king_side = true)
-    corner_pos_x = (is_king_side == true) ? 8 : 1
-    corner_pos_y = (color == "white") ? 1 : 8
-
-    return false if !can_castle?(corner_pos_x, corner_pos_y)
+  def castle!(corner_pos_x, corner_pos_y)
 
     rook = game.get_piece_at(corner_pos_x, corner_pos_y)
-
-    update_attributes(corner_pos_x, corner_pos_y, :has_moved? => true)
-
+############ This method needs work ##########
     if is_king_side
-      rook.update_attributes!(corner_pos_x - 2, corner_pos_y, :has_moved? => true)
+      update_attributes(x: 7, y: corner_pos_y)
+      rook.update_attributes!(x: 6, y: corner_pos_y)
     else
-      rook.update_attributes!(corner_pos_x + 3, corner_pos_y, :has_moved? => true)
+      update_attributes(x: 3, y: corner_pos_y)
+      rook.update_attributes!(x: 4, y: corner_pos_y)
     end
     
     return true

@@ -31,10 +31,10 @@ class Pawn < Piece
     
     update_attributes(passed_thru?: false) if passed_thru? == true
 
-    if color=="white" && y == 2 && new_y == 4
-      || color == "black" && y == 7 && new_y == 5
+    if color=="white" && y == 2 && new_y == 4 || color == "black" && y == 7 && new_y == 5
         update_attributes(passed_thru?: true)
-    
+    end
+
     super
 
     capture_enpassant!(new_x) if can_enpassant?(new_x)
