@@ -1,20 +1,26 @@
-<div class="col-12">
-  <h1>Welcome to Chess</h1>
-  <%= link_to "New Game", games_path, method: :post %>
-  <br/>
-  <br/>
-  <h2>Current Games</h2>
-  <table class = "table">
-  <% @games.each do |game| %>
-    <tr>
-      <td>Game id: <%= game.id %></td>
-      <td>
-        <% if game.white_user_id.nil? || game.black_user_id.nil? %>
-          <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button", :method => :put %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
+
+<div class="col-10 offset-1">
+  <div class="welcome text-center">
+      <h1>Welcome to Chess!</h1>
+      <br/>
+      <%= link_to "New Game", games_path, :class => 'btn btn-primary btn-sm center-fluid', :role => "button", method: :post %>
+  </div>
+  
+  <div class="curr-games col-10 offset-1"> 
+    <h2>Current Games</h2>
+    <table class = "table">
+      <% @games.each do |game| %>
+        <tr>
+          <td>Game id: <%= game.id %></td>
+          <td>
+            <% if game.white_user_id.nil? || game.black_user_id.nil? %>
+              <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button", :method => :put %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>
 
 
