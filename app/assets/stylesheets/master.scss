@@ -33,7 +33,7 @@ width:80px;
 #chess_board { 
   border:5px solid #333333; 
   margin: auto;
-  width: 50% !important;
+  padding: 30px;
 }
 
 #chess_board td {
@@ -53,6 +53,10 @@ background:#000000;
   padding: 30px;
 }
 
+.game {
+  padding: 30px;
+}
+
 .navbar-brand {
   letter-spacing: 1px;
   font-size: 40px;
@@ -65,4 +69,6 @@ background:#000000;
 
 .welcome {
   padding: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
