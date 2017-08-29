@@ -2,7 +2,10 @@ class King < Piece
 
   def valid_move?(dest_x, dest_y) 
     return true if is_adjacent?(dest_x, dest_y) && (!game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y))
-    return true if is_castle?(dest_x, dest_y) == "kingside" && can_castle(8, )
+    if is_castle?(dest_x, dest_y)
+      coords = get_castling_corner(dest_x, dest_y)
+      return true if can_castle?(coords[0], coords[1])
+    end
     return false
 
   end
@@ -50,11 +53,10 @@ class King < Piece
   def castle!(corner_pos_x, corner_pos_y)
 
     rook = game.get_piece_at(corner_pos_x, corner_pos_y)
-############ This method needs work ##########
-    if is_king_side
+    if corner_pos_x == 8
       update_attributes(x: 7, y: corner_pos_y)
       rook.update_attributes!(x: 6, y: corner_pos_y)
-    else
+    elsif corner_pos_x == 1
       update_attributes(x: 3, y: corner_pos_y)
       rook.update_attributes!(x: 4, y: corner_pos_y)
     end
