@@ -8,40 +8,60 @@ class Pawn < Piece
 
   def valid_move?(dest_x,dest_y)
     
-    # Clean this up!
-    # Determine if its a capture on either side
-    return true if (dest_x == x+1 && dest_y == y+1 && game.is_occupied?(x+1, y+1) && game.get_piece_at(x+1, y+1).color != color)
-      || (dest_x == x-1 && dest_y == y+1 && game.is_occupied(x-1, y+1 && game.get_piece_at(x-1, y+1).color != color))
+    advance_unit = (color == "white" ? 1 : -1)
 
-    is_empty_one = !game.is_occupied?(x, y+1)
-    is_empty_two = is_empty_one && !game.is_occupied?(x, y+2)
-    return true if (dest_x == x && dest_y == y+1) && is_empty_one #advance a single square if empty
-    return true if (dest_x == x && dest_y == 4) && is_empty_two # first move can advance 2 squares
+    #move up 1 space
+    return true if dest_x == x && dest_y == y + advance_unit && !game.is_occupied?(x, y+advance_unit)
+    
+    #move up 2 spaces
+    return true if !has_moved? && dest_x == x && dest_y == y+2*advance_unit && !game.is_occupied?(x, y+2*advance_unit)
+    
+    #capture right
+    return true if dest_x == x+1 && dest_y == y+advance_unit && game.is_occupied?(x+1, y+advance_unit) && game.get_piece_at(x+1, y+advance_unit).color != color
+    
+    #capture left
+    return true if dest_x == x-1 && dest_y == y+advance_unit && game.is_occupied?(x-1, y+advance_unit) && game.get_piece_at(x-1, y+advance_unit).color != color
+
+    return true if can_enpassant?(dest_x)
+
     return false
   end
 
-  def can_enpassant?(file, opp_piece) #returns true if current player has en passant option
+  def move_to!(new_x, new_y)
     
-    #must be adjacent file
+    update_attributes(passed_thru?: false) if passed_thru? == true
+
+    if color=="white" && y == 2 && new_y == 4
+      || color == "black" && y == 7 && new_y == 5
+        update_attributes(passed_thru?: true)
+    
+    super
+
+    capture_enpassant!(new_x) if can_enpassant?(new_x)
+
+    update_attributes(:has_moved? => true) if has_moved? == false
+
+
+  end
+
+  def can_enpassant?(file)
+    
     return false if (file - x).abs != 1
 
-    # must be on correct rank
     rank = (color == "white") ? 6 : 4
     return false if y != rank
 
-    # opponent's piece must be a pawn at correct location
-    return false unless opp_piece.type == "pawn" && 
-      opp_piece.color != color && 
-        opp_piece.passed_thru? == true
+    opp_piece = game.get_piece_at(file, y)
 
-    return true
+    return false unless opp_piece.type == "Pawn" && opp_piece.passed_thru? == true
 
   end
 
   def capture_enpassant!(file)
-    opp_piece = game.get_piece_at(file, y)
-    return false if !can_enpassant?(file, opp_piece)
-    update_attributes(x: file, y: rank+1)
-    opp_piece.remove_from_game!
+    return false if !can_enpassant?(file)
+    advance_unit = (color == "white" ? 1 : -1)
+    game.get_piece_at(file, y).remove_from_game!
+    update_attributes(x: file, y: y+advance_unit)
+    return true
   end
 end

@@ -8,39 +8,33 @@ class Piece < ApplicationRecord
   validates :x, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
 
-  # Clean this up! Especially handling of passed_thru?
-  def move_to!(new_x, new_y) # return value of false indicates an error occurred
+  def move_to!(new_x, new_y)
     
-    return false if valid_move?(new_x, new_y) == false #invalid move
+    return false if valid_move?(new_x, new_y) == false
 
-    if game.is_occupied?(new_x, new_y) == false
-      update_attributes(:x => new_x, :y => new_y, :has_moved? => true)
-      if type == "Pawn" && new_y == y+2
-        update_attributes(passed_thru?: true)
-      else
-        passed_thru? = false
-      end
+    unless game.is_occupied?(new_x, new_y) 
+      update_attributes(:x => new_x, :y => new_y)
     else
       target_piece = game.get_piece_at(new_x, new_y)
-      
-      return false if target_piece.color == self.color #can't move to square with piece of own color
-      
-      return false if target_piece.type == "King" #can't capture the opponent's king
-      # this should never happen because they should have moved out of check last turn
-      
       target_piece.remove_from_game!
-      update_attributes(:x => new_x, :y => new_y, :has_moved? => true)
-      update_attributes(passed_thru?: false) if type == "Pawn"
-
-      return true
+      update_attributes(:x => new_x, :y => new_y)
     end
+    
+    return true
+
   end
   
   # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
-    if is_obstructed?(dest_x, dest_y)
-      return false
-    end
+
+    return false if is_obstructed?(dest_x, dest_y)
+
+    return !game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y)
+
+  end
+
+  def can_capture?(dest_x, dest_y)
+    game.get_piece_at(dest_x, dest_y).color != color && game.get_piece_at(dest_x, dest_y) != "King"
   end
 
   def is_obstructed?(dest_x, dest_y)

@@ -4,6 +4,12 @@ class King < Piece
     is_adjacent?(dest_x, dest_y)
   end
 
+  def move_to!(new_x, new_y)
+    super
+    update_attributes(:has_moved? => true) if has_moved? == false
+  end
+
+
   def can_castle?(corner_pos_x, corner_pos_y)
 
     return false if has_moved?
