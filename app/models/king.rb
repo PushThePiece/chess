@@ -14,9 +14,11 @@ class King < Piece
     super
     if is_castle?(dest_x, dest_y)
       coords = get_castling_corner(dest_x, dest_y)
+      
       if can_castle?(coords[0], coords[1])
         castle!(coords[0], coords[1])
-
+      end
+    end
     update_attributes(:has_moved? => true) if has_moved? == false
   end
 
