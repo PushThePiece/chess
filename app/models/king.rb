@@ -19,7 +19,7 @@ class King < Piece
         castle!(coords[0], coords[1])
       end
     end
-    update_attributes(:has_moved? => true) if has_moved? == false
+    update_attributes(:has_moved? => true)
   end
 
   def is_castle?(dest_x, dest_y)
@@ -49,6 +49,7 @@ class King < Piece
     obstr_range = (piece.x == 8) ? [6, 7] : [2,3,4]
     obstr_range.each { |sq| return false if game.is_occupied?(sq, y) }
 
+    #### ADD IN IF OPP PIECE ATTACKING INTERMEDIATE SQUARE E#####
     return true
   end
 
@@ -62,7 +63,7 @@ class King < Piece
       update_attributes(x: 3, y: corner_pos_y)
       rook.update_attributes!(x: 4, y: corner_pos_y)
     end
-    
+    rook.update_attributes!(has_moved?: true)
     return true
   end
 

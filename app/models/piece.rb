@@ -19,15 +19,13 @@ class Piece < ApplicationRecord
       target_piece.remove_from_game!
       update_attributes(:x => new_x, :y => new_y)
     end
-    
+    update_attributes(:has_moved? => true)
     return true
 
   end
   
   # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
-
-    return false if is_obstructed?(dest_x, dest_y)
 
     return !game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y)
 
