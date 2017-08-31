@@ -13,9 +13,25 @@ RSpec.describe Piece, type: :King do
     end
   end
 
+  describe "castling" do
+    it "should return false if a piece is obstructing the castling" do
+      @k.update_attributes(x: 5, y: 1)
+      r = Rook.create(x: 8, y: 1, color: "white", game: @g)
+      b = Bishop.create(x: 6, y: 1, color: "white", game: @g)
+      expect(@k.move_to!(7,1)).to be(false) #attempt to castle
+      b.remove_from_game!
+    end
+
+    it "should return false if castling through opponent's attacking range" do
+      @k.update_attributes(x: 5, y: 1)
+      r = Rook.create(x: 8, y: 1, color: "white", game: @g)
+      kn = Knight.create(x: 5, y: 3, color: "black", game: @g)
+      @g.get_piece_at(6,1).remove_from_game!
+      @g.get_piece_at(7,1).remove_from_game!
+      expect(@k.move_to!(7,1)).to be(false) #attempt to castle
+    end
+  end
 end
-
-
 
 
 

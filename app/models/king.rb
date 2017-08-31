@@ -17,6 +17,8 @@ class King < Piece
       
       if can_castle?(coords[0], coords[1])
         castle!(coords[0], coords[1])
+      else
+        return false
       end
     end
     update_attributes(:has_moved? => true)
@@ -42,14 +44,15 @@ class King < Piece
   def can_castle?(corner_pos_x, corner_pos_y)
 
     return false if has_moved?
-
     piece = game.get_piece_at(corner_pos_x,corner_pos_y)
     return false if piece.nil? || piece.type != "Rook" || piece.has_moved?
 
     obstr_range = (piece.x == 8) ? [6, 7] : [2,3,4]
-    obstr_range.each { |sq| return false if game.is_occupied?(sq, y) }
-
-    #### ADD IN IF OPP PIECE ATTACKING INTERMEDIATE SQUARE E#####
+    obstr_range.each do |sq|
+      return false if game.is_occupied?(sq, y)
+      opp_color = (color == "white") ? "black" : "white"
+      Piece.where(color: opp_color).each {|piece| return false if piece.valid_move?(sq, y) }
+    end
     return true
   end
 
