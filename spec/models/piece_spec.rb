@@ -2,10 +2,25 @@ require 'rails_helper'
 
 RSpec.describe Piece do
 
+  # To test:
+  # - color validation
+  # - x,y validation
+  # - general move_to! failures
+  # -is_obstructed failures
+  # -can_capture? failure
+
   before(:example) do 
     @g = Game.create
-    @b = Bishop.create(x: 3, y: 3, color: "white", game: @g)
   end
+
+  describe ""
+
+  it "should successfully validate position in the piece table" do
+    g = Game.create
+    k = Knight.create(x: 10, y: 4, color: "white", game: g)
+    expect(k.valid?).to be(false)
+  end
+
 
   describe "move_to! method" do
     it "should return false for an invalid move" do
@@ -42,12 +57,6 @@ RSpec.describe Piece, type: :Knight do
     k = Knight.create(x: 3, y: 3, game: g)
     expect(k.valid_move?(4,5)).to be(true)
     expect(k.valid_move?(5,5)).to be(false)
-  end
-
-  it "should successfully validate position in the piece table" do
-    g = Game.create
-    k = Knight.create(x: 10, y: 4, color: "white", game: g)
-    expect(k.valid?).to be(false)
   end
 end
 
