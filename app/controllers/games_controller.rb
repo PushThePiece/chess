@@ -7,6 +7,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(white_user_id: current_user.id, turn: current_user.id)
+    @game.set_pieces_to_user_color()
     flash[:alert] = "Waiting for another player to join game."
     redirect_to game_path(@game)
   end
