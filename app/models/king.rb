@@ -1,13 +1,13 @@
 class King < Piece
 
   def valid_move?(dest_x, dest_y) 
-    return true if is_adjacent?(dest_x, dest_y) && (!game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y))
+    super
+    return true if is_adjacent?(dest_x, dest_y)
     if is_castle?(dest_x, dest_y)
       coords = get_castling_corner(dest_x, dest_y)
       return true if can_castle?(coords[0], coords[1])
     end
     return false
-
   end
 
   def move_to!(dest_x, dest_y)
