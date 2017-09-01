@@ -84,8 +84,6 @@ class Piece < ApplicationRecord
     update_attributes(:x => nil, :y => nil)
   end
 
- 
-
 
   def coord_to_alg_notation(x, y)
     alg = ""
