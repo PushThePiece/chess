@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825152548) do
+ActiveRecord::Schema.define(version: 20170828155641) do
 
 
   # These are extensions that must be enabled in order to support this database
@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 20170825152548) do
     t.integer "x"
     t.integer "y"
     t.string  "color"
-    t.boolean "has_moved?", default: false
+    t.boolean "has_moved?",   default: false
+    t.boolean "passed_thru?", default: false
   end
 
   create_table "users", force: :cascade do |t|
