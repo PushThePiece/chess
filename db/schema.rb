@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 20170831182917) do
     t.integer "x"
     t.integer "y"
     t.string  "color"
-    t.boolean "has_moved?", default: false
+    t.boolean "has_moved?",   default: false
     t.integer "user_id"
+    t.boolean "passed_thru?", default: false
   end
 
   create_table "users", force: :cascade do |t|
