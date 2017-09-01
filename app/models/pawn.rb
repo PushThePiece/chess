@@ -10,18 +10,14 @@ class Pawn < Piece
     
     advance_unit = (color == "white" ? 1 : -1)
 
-    #move up 1 space
     return true if dest_x == x && dest_y == y + advance_unit && !game.is_occupied?(x, y+advance_unit)
     
-    #move up 2 spaces
     return true if !has_moved? && dest_x == x && dest_y == y+2*advance_unit && !game.is_occupied?(x, y+advance_unit) && !game.is_occupied?(x, y+2*advance_unit)
     
-    #capture right
-    return true if dest_x == x+1 && dest_y == y+advance_unit && game.is_occupied?(x+1, y+advance_unit) && game.get_piece_at(x+1, y+advance_unit).color != color
+    if dest_x == x+1 || dest_x == x-1
+      return true if dest_y == y+advance_unit && game.is_occupied?(dest_x, y+advance_unit) && game.get_piece_at(dest_x, y+advance_unit).color != color
+    end
     
-    #capture left
-    return true if dest_x == x-1 && dest_y == y+advance_unit && game.is_occupied?(x-1, y+advance_unit) && game.get_piece_at(x-1, y+advance_unit).color != color
-
     return true if can_enpassant?(dest_x)
 
     return false
