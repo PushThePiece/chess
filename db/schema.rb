@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831182917) do
+ActiveRecord::Schema.define(version: 20170828155641) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +19,6 @@ ActiveRecord::Schema.define(version: 20170831182917) do
   create_table "games", force: :cascade do |t|
     t.integer "white_user_id"
     t.integer "black_user_id"
-    t.integer "turn"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 20170831182917) do
     t.integer "y"
     t.string  "color"
     t.boolean "has_moved?",   default: false
-    t.integer "user_id"
     t.boolean "passed_thru?", default: false
   end
 
