@@ -10,7 +10,7 @@ class Game < ApplicationRecord
   def populate_game!
     #white pieces
     (1..8).each do |position|
-      Pawn.create(game_id: id, x: position, y: 2, color: 'white')
+      Pawn.create(game_id: id, x: position, y: 2, color: 'white', passed_thru?: false)
     end
 
     Rook.create(game_id: id, x: 1, y: 1, color: 'white')
@@ -27,7 +27,7 @@ class Game < ApplicationRecord
 
     #black pieces
     (1..8).each do |position|
-      Pawn.create(game_id: id, x: position, y: 7, color: 'black')
+      Pawn.create(game_id: id, x: position, y: 7, color: 'black', passed_thru?: false)
     end
 
     Rook.create(game_id: id, x: 1, y: 8, color: 'black')
@@ -41,6 +41,9 @@ class Game < ApplicationRecord
  
     Queen.create(game_id: id, x: 4, y: 8, color: 'black')
     King.create(game_id: id, x: 5, y: 8, color: 'black')
+
+    p "_________________", get_piece_at(4,2).present?
+
   end
 
   def is_occupied?(x, y)

@@ -1,7 +1,5 @@
 class Pawn < Piece
 
-  validates :passed_thru?, presence: true
-
   def unicode_point
     color == 'white' ? '&#9817' : '&#9823'
   end
