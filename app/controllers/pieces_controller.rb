@@ -7,8 +7,13 @@ class PiecesController < ApplicationController
 
   def update
     @piece = Piece.find(params[:id])
-    @piece.update_attributes(piece_params)
-    render json: @piece
+    # if @piece.user_id == current_game.turn
+        #if @piece.valid_move?(dest_x, dest_y)
+        @piece.update_attributes(piece_params)
+        current_game.next_player(@piece.color)
+        render json: @piece
+        #end
+    # end
   end
 
   private 
