@@ -7,7 +7,8 @@ class PiecesController < ApplicationController
 
   def update
     @piece = Piece.find(params[:id])
-    @piece.update_attributes(:x, :y)
+    @piece.update_attributes(piece_params)
+    render json: @piece
   end
 
   private 
@@ -18,4 +19,9 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @current_game ||= @piece.game
   end
+
+  def piece_params
+    params.require(:piece).permit(:x, :y)
+  end
+
 end

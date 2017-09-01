@@ -1,5 +1,24 @@
 @import "bootstrap";
 
+body {
+  font-family: 'Anada', serif;
+  background-image: image_url('background.png');
+}
+
+body a {
+  color: black;
+}
+
+input {
+  font-family: 'Anada', serif;
+}
+
+.admin {
+  letter-spacing: 1px;
+  font-size: 20px;
+  font-family: 'Almendra', serif;
+}
+
 #chess_board a {
 color:#000000;
 display:block;
@@ -11,7 +30,12 @@ text-shadow:0 1px #ffffff;
 width:80px;
 }
 
-#chess_board { border:5px solid #333333; }
+#chess_board { 
+  border:5px solid #333333; 
+  margin: auto;
+  padding: 30px;
+}
+
 #chess_board td {
 background:#ffffff;
 height:80px;
@@ -19,12 +43,32 @@ text-align:center;
 vertical-align:middle;
 width:80px;
 }
+
 #chess_board tr:nth-child(odd) td:nth-child(even),
 #chess_board tr:nth-child(even) td:nth-child(odd) {
 background:#000000;
 }
 
+.curr-games {
+  padding: 30px;
+}
+
+.game {
+  padding: 30px;
+}
+
 .navbar-brand {
   letter-spacing: 1px;
-  font-size: 30px;
+  font-size: 40px;
+  font-family: 'Almendra', serif;
+}
+
+.top-nav a {
+  color: white;
+}
+
+.welcome {
+  padding: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

@@ -1,16 +1,46 @@
-<%= "Hello #{current_user.email} you are playing #{@game.inspect}"%>
+<script>
+  $(function(){
+    $('.piece').draggable( {
+      containment: '#chess_board',
+      snap: '.cell'
+    });
+        
+    $('.cell').droppable( {
+      drop: function (event, ui) {
+      var newCellX = $(event.target).data('x');
+      var newCellY = $(event.target).data('y');
+      var pieceMovedUrl = ui.draggable.data('update-url');
+        $.ajax({
+          type: 'PUT',
+          url: pieceMovedUrl,
+          data: { piece: { x: newCellX, y: newCellY } },
+        });
+      }
+    });
+  });
+</script>
 
-<table id="chess_board" cellpadding="0" cellspacing="0">
-  <% (1..8).each do |y| %>
-    <tr>
-      <% (1..8).each do |x| %>
-        <td>
-          <% piece = @game.get_piece_at(x, y) %>
-          <% if piece.present? %>
-        <%= link_to piece.unicode_point.html_safe, piece_path(piece) %> 
+<div class="container">
+  <div class="game text-center">
+    <h3><%= "Hello #{current_user.email} you are playing #{@game.id}"%></h3>
+  </div>
+  <div class="board">
+    <table id="chess_board" cellpadding="0" cellspacing="0">
+      <% (8.downto(1)).each do |y| %> 
+        <tr> 
+          <% (1..8).each do |x| %>
+            <% piece = @game.get_piece_at(x, y) %>
+            <td class="cell" data-x="<%= x %>" data-y="<%= y %>" >
+              <% if piece.present? %>
+                <div data-update-url="<%=piece_path(piece)%>" class="piece">
+                <%= link_to piece.unicode_point.html_safe, piece_path(piece) %> 
+                </div>
+              <% end %>  
+            </td>
           <% end %>
-        </td>
+        </tr>
       <% end %>
-    </tr>
-  <% end %>
-</table>
+    </table>
+  </div>
+ </div>
+
