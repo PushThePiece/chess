@@ -29,21 +29,22 @@ class Pawn < Piece
 
   def move_to!(new_x, new_y)
     
-    update_attributes(passed_thru?: false)
+    return false if valid_move?(new_x, new_y) == false
 
-    if color=="white" && y == 2 && new_y == 4 || color == "black" && y == 7 && new_y == 5
+    if can_enpassant?(new_x) == false
+      opp_piece = game.get_piece_at(new_x, new_y)
+      if !opp_piece.nil?
+        opp_piece.remove_from_game!
+      end
+      if color=="white" && y == 2 && new_y == 4 || color == "black" && y == 7 && new_y == 5
         update_attributes(passed_thru?: true)
+      end
+      update_attributes(x: new_x, y: new_y, has_moved?: true)
+      return true
+    else
+      capture_enpassant!(new_x)
+      return true
     end
-
-    if can_enpassant?(new_x)
-      capture_enpassant!(new_x) 
-      return
-    end
-
-    update_attributes(x: new_x, y: new_y)
-
-    update_attributes(:has_moved? => true)
-
 
   end
 
@@ -51,13 +52,15 @@ class Pawn < Piece
     
     return false if (file - x).abs != 1
 
-    rank = (color == "white") ? 6 : 4
-    return false if y != rank
+    piece_rank = (color == "white") ? 5 : 4
+    move_to_rank = (color == "white") ? piece_rank + 1 : piece_rank - 1
+
+    return false if y != piece_rank
 
     opp_piece = game.get_piece_at(file, y)
+    return false if opp_piece.nil? || opp_piece.type != "Pawn" || opp_piece.color == color || !opp_piece.passed_thru?
 
-    return false unless opp_piece.type == "Pawn" && opp_piece.passed_thru? == true
-
+    return true
   end
 
   def capture_enpassant!(file)
