@@ -42,8 +42,6 @@ class Game < ApplicationRecord
     Queen.create(game_id: id, x: 4, y: 8, color: 'black')
     King.create(game_id: id, x: 5, y: 8, color: 'black')
 
-    p "_________________", get_piece_at(4,2).present?
-
   end
 
   def is_occupied?(x, y)
