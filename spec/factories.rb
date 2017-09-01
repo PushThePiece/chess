@@ -10,6 +10,7 @@ FactoryGirl.define do
   factory :game do
     black_user_id 1
     white_user_id 1
+    turn          1
   end
 
 end

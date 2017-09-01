@@ -2,6 +2,7 @@ class Game < ApplicationRecord
 
   after_create :populate_game!
   has_many :pieces
+  belongs_to :white, class_name: "User", foreign_key: :white_user_id, optional: true
 
   def get_piece_at(x,y)
     return Piece.where(:x => x, :y => y, :game_id => id).last
@@ -61,4 +62,20 @@ class Game < ApplicationRecord
     false
   end
 
+  def set_pieces_to_user_color
+    pieces.where(color: 'white').each do |piece|
+      piece.update_attributes(user_id: white_user_id)
+    end
+    pieces.where(color: 'black').each do |piece|
+      piece.update_attributes(user_id: black_user_id)
+    end
+  end
+
+  def next_player(color)
+    if color == 'white'
+      update_attributes(turn: black_user_id)
+    else
+      update_attributes(turn: white_user_id)
+    end
+  end
 end
