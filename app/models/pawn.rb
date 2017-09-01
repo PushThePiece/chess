@@ -56,7 +56,7 @@ class Pawn < Piece
     move_to_rank = (color == "white") ? piece_rank + 1 : piece_rank - 1
 
     return false if y != piece_rank
-
+    return false if !game.get_piece_at(file, move_to_rank).nil?
     opp_piece = game.get_piece_at(file, y)
     return false if opp_piece.nil? || opp_piece.type != "Pawn" || opp_piece.color == color || !opp_piece.passed_thru?
 
