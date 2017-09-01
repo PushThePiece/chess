@@ -17,7 +17,7 @@ class Pawn < Piece
     if dest_x == x+1 || dest_x == x-1
       return true if dest_y == y+advance_unit && game.is_occupied?(dest_x, y+advance_unit) && game.get_piece_at(dest_x, y+advance_unit).color != color
     end
-    
+
     return true if can_enpassant?(dest_x)
 
     return false
@@ -27,7 +27,7 @@ class Pawn < Piece
     
     return false if valid_move?(new_x, new_y) == false
 
-    if can_enpassant?(new_x) == false
+    unless can_enpassant?(new_x)
       opp_piece = game.get_piece_at(new_x, new_y)
       if !opp_piece.nil?
         opp_piece.remove_from_game!
