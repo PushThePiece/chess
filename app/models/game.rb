@@ -61,6 +61,7 @@ class Game < ApplicationRecord
     end
     false
   end
+
   def set_pieces_to_user_color
     pieces.where(color: 'white').each do |piece|
       piece.update_attributes(user_id: white_user_id)
@@ -77,8 +78,4 @@ class Game < ApplicationRecord
       update_attributes(turn: white_user_id)
     end
   end
-  
-
-
-
 end
