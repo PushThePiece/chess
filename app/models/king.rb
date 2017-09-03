@@ -70,6 +70,10 @@ class King < Piece
     return true
   end
 
+  def fake_moves(x, y)
+    return true if move_to!(x+1, y) #right
+  end
+
   def unicode_point
     color == 'white' ? '&#9812' : '&#9818'
   end

@@ -7,6 +7,12 @@ RSpec.describe Piece, type: :King do
     @k = King.create(x: 4, y: 4, color: "white", game: @g)
   end
 
+  describe "fake_moves for King" do
+    it "should return true if King has a valid move" do
+      expect(@k.fake_moves(4,4)).to be(true)
+    end
+  end
+
   describe "valid_move? for King" do
     it "should return false if it is an illegal king move" do
       expect(@k.valid_move?(3,6)).to be(false)
