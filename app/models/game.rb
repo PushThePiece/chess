@@ -1,5 +1,4 @@
 class Game < ApplicationRecord
-
   after_create :populate_game!
   has_many :pieces
 
@@ -90,5 +89,5 @@ class Game < ApplicationRecord
   #
   end
 
-  
+
 end

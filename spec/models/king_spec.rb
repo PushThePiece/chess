@@ -9,7 +9,23 @@ RSpec.describe Piece, type: :King do
 
   describe "fake_moves for King" do
     it "should return true if King has a valid move" do
-      expect(@k.fake_moves(4,4)).to be(true)
+      b = Piece.create(x: 3, y: 5, color: "white", game: @g)
+      b = Piece.create(x: 4, y: 5, color: "white", game: @g)
+      b = Piece.create(x: 5, y: 5, color: "white", game: @g)
+      b = Piece.create(x: 3, y: 4, color: "white", game: @g)
+      b = Piece.create(x: 5, y: 4, color: "white", game: @g)
+      b = Piece.create(x: 3, y: 3, color: "white", game: @g)
+      b = Piece.create(x: 4, y: 3, color: "white", game: @g)
+      b = Piece.create(x: 5, y: 3, color: "black", game: @g)
+      expect(@k.fake_moves).to be(false)
+    end
+
+    it "should return true if King has a valid move" do
+      b = Bishop.create(x: 3, y: 5, color: "black", game: @g)
+      b = Bishop.create(x: 4, y: 5, color: "black", game: @g)
+      b = Bishop.create(x: 5, y: 5, color: "black", game: @g)
+      b = Bishop.create(x: 3, y: 4, color: "black", game: @g)
+      expect(@k.fake_moves).to be(true)
     end
   end
 
