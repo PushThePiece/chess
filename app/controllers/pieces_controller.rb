@@ -8,6 +8,7 @@ class PiecesController < ApplicationController
   def update
     @piece = Piece.find(params[:id])
     @piece.update_attributes(piece_params)
+    current_game.next_player(@piece.color)
     render json: @piece
   end
 
