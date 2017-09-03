@@ -65,12 +65,7 @@ class Game < ApplicationRecord
   end
 
   def forfeit!(user)
-    if user == white_player
-      forfeit_color = 'white'
-    else
-      forfeit_color = 'black'
-    end
-    
+    fofeit_color = user == white_player ? 'white' : 'black'
   end
 
   def pieces_remaining(color)
