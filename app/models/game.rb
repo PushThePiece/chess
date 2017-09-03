@@ -49,17 +49,42 @@ class Game < ApplicationRecord
     return true
   end
   
-  def check?(color)
-    king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces_remaining(!color)
+  # I don't think code here is being used
+  # def check?(color)
+  #   king = pieces.find_by(type: 'King', color: color)
+  #   opponents = pieces_remaining(!color)
 
-    opponents.each do |piece|
-      if piece.valid_move?(king.x, king.y)
-        @piece_causing_check = piece
-        return true
+  #   opponents.each do |piece|
+  #     if piece.valid_move?(king.x, king.y)
+  #       @piece_causing_check = piece
+  #       return true
+  #     end
+  #   end
+  #   false
+  # end
+    def opponents_causing_check?(king)
+    # if king is in check, returns list of pieces that threaten it
+    threatening_pieces = []
+    opponents_pieces = self.pieces.where(color: !king.color)
+    opponents_pieces.each do |piece|
+      if piece.valid_move?(king.x_position, king.y_position)
+        threatening_pieces << piece
       end
     end
-    false
+    if threatening_pieces.any?
+      return threatening_pieces
+    end
   end
 
-end
+  def checkmate(king)
+    #assume moves vaidated before here
+    #look for threathening pieces
+    threatening_pieces = opponents_causing_check(king)
+    #if there are threatening pieces move king to see if he can get out of check
+    if threathening_pieces
+      # move_king (1) in every_direction
+      return false if move_is_valid? #not in checkmate, king has valid move out
+    end 
+    #if there are no threathening pieces game is not in checkmate
+    return false
+  end
