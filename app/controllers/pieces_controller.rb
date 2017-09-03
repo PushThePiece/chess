@@ -1,4 +1,7 @@
 class PiecesController < ApplicationController
+
+  before_action :valid_turn?, only: [:update] #this should be on pieces update
+
   def show
     @piece = Piece.find(params[:id])
     @current_game = current_game
@@ -24,5 +27,9 @@ class PiecesController < ApplicationController
   def piece_params
     params.require(:piece).permit(:x, :y)
   end
+
+   def valid_turn?
+    return unless :black_user_id == !:turn && :white_user_id == !:turn
+  end 
 
 end

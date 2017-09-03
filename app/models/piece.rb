@@ -1,7 +1,7 @@
 
 class Piece < ApplicationRecord
   belongs_to :game
-
+  
   validates :color, inclusion: { in: ['white', 'black'] }, :allow_nil => true
   validates :x, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
