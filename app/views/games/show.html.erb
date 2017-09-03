@@ -41,6 +41,11 @@
         </tr>
       <% end %>
     </table>
+      <br />
+      <button type="button" class="btn btn-danger btn-md ">
+      <%= link_to 'Forfeit', forfeit_game_path(@game.id), method: :patch %>
+      </button>
+    </div>
   </div>
  </div>
 
