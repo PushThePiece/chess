@@ -9,6 +9,7 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     @piece.update_attributes(piece_params)
     current_game.next_player(@piece.color)
+#     @piece.move_to!(piece_params["x"].to_i, piece_params["y"].to_i)
     render json: @piece
   end
 
