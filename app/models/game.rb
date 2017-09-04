@@ -73,10 +73,11 @@ class Game < ApplicationRecord
   #   #look for threathening pieces
     threatening_pieces = opponents_check?(king)
   #   #if there are threatening pieces move king to see if he can get out of check
-  #   if threathening_pieces
-  #     moves = fake_moves(king.x, king.y)
-  #     return false if moves? #not in checkmate, king has valid move out
-  #   end 
+    if threathening_pieces
+      moves = fake_moves
+      # return false if moves #not in checkmate, king has valid move out
+      return moves
+    end 
   #   #if there are no threathening pieces game is not in checkmate
   #   return false
   #
