@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Game, type: :model do
 
   describe "checkmate for game" do
-    it "determine if the game is in checkmate" do
+    it "determines if the game is in checkmate" do
       @g = Game.new
       @k = King.create(x: 4, y: 4, color: "white", game: @g)
       @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
@@ -13,8 +13,9 @@ RSpec.describe Game, type: :model do
       @g.reload
       expect(@g.checkmate(@k)).to be(true)
     end
-
-     it "determine if the game is in checkmate" do
+  end
+  describe "stalemate for game" do 
+    it "determines if the game is in stalemate" do
       @g = Game.new
       @k = King.create(x: 4, y: 4, color: "white", game: @g)
       @p1 = Piece.create(x: 4, y: 3, color: "white", game: @g)
@@ -27,8 +28,7 @@ RSpec.describe Game, type: :model do
       @p8 = Piece.create(x: 5, y: 3, color: "white", game: @g)
       # [[5, 5]]
       @g.reload
-      expect(@g.checkmate(@k)).to be(true)
+      # expect(@g.stalemate(@k)).to be(true)
     end
-  end
 
 end
