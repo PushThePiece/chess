@@ -47,10 +47,6 @@ class Game < ApplicationRecord
     return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
     return true
   end
-  
-  def in_check?
-    fake_moves.any? #this is redundant code...
-  end
 
   def opponents_check?(king)
     x=king.x
@@ -63,24 +59,36 @@ class Game < ApplicationRecord
         threatening_pieces << piece
       end
     end
-    # threatening_pieces.any?
-      return threatening_pieces
-    # end
+    return threatening_pieces
   end
   
   def checkmate(king)
     #assume moves vaidated before here
     threatening_pieces = opponents_check?(king)
     # if there are threatening pieces move king to see if he can get out of check
-    # if threatening_pieces.any?
-      puts fake_moves
-      # undefined local variable or method `fake_moves' for #<Game:0x007fdf44fffc00>
-     
-      # return false if moves = king.fake_moves
-      # return true if nil
-    # else
-      # return false #game is not in check if there are no threatening pieces
-    # end 
+    if threatening_pieces
+      x = king.x
+      y = king.y
+      valid_moves = [] 
+      ((y-1)..(y+1)).each do |y|
+        ((x-1)..(x+1)).each do |x|
+          piece = get_piece_at(x,y) #look for another piece
+          if piece == nil #if there is no piece there see if king can move to that position
+            if king.move_to!(x,y) 
+              valid_moves << [x,y]
+            end
+          end
+        end
+      end
+      #valid_moves = [[3, 3], [4, 3], [5, 3], [3, 4], [5, 4], [3, 5], [4, 5], [5, 5]]
+      # if valid_moves #if there is a valid move out, see if king is still in check.
+        
+      # end
+
+      return valid_moves #true or #false
+    else
+      return false #return false if there are no threathening pieces
+    end 
   end
 
 
