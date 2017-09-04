@@ -43,7 +43,7 @@ class Game < ApplicationRecord
 
   end
 
-  def is_occupied?(x, y)
+  def is_occupied?(x, y) #this doesn't seem to be working properly
     return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
     return true
   end
@@ -72,18 +72,14 @@ class Game < ApplicationRecord
       valid_moves = [] 
       ((y-1)..(y+1)).each do |y|
         ((x-1)..(x+1)).each do |x|
-          piece = get_piece_at(x,y) #look for another piece
-          if piece == nil #if there is no piece there see if king can move to that position
+          if get_piece_at(x,y).nil?
             if king.move_to!(x,y) 
-              valid_moves << [x,y]
+              valid_moves << [x,y] 
             end
           end
         end
       end
-      # if valid_moves = stalemate? #if there is a valid move out, see if king is still in check.
-          #to do - needs check? method
-      # end
-      return valid_moves #true or #false
+      return false if valid_moves #true or #false
     else
       return false #return false if there are no threathening pieces
     end 
@@ -91,31 +87,29 @@ class Game < ApplicationRecord
 
     def stalemate(king)
     #assume moves vaidated before here
-    threatening_pieces = opponents_check?(king)
-    # if there are threatening pieces move king to see if he can get out of check
-    if threatening_pieces
-      x = king.x
-      y = king.y
-      valid_moves = [] 
-      ((y-1)..(y+1)).each do |y|
-        ((x-1)..(x+1)).each do |x|
-          piece = get_piece_at(x,y) #look for another piece
-          if piece == nil #if there is no piece there see if king can move to that position
-            if king.move_to!(x,y) 
-              valid_moves << [x,y]
+      threatening_pieces = opponents_check?(king)
+      # if there are threatening pieces move king to see if he can get out of check
+        if threatening_pieces
+          x = king.x
+          y = king.y
+          valid_moves = [] 
+          ((y-1)..(y+1)).each do |y|
+            ((x-1)..(x+1)).each do |x|
+              if get_piece_at(x,y).nil? #look for another piece
+                if king.move_to!(x,y) 
+                  valid_moves << [x,y]
+                end
+              end
             end
           end
-        end
-      end
-      # if valid_moves = stalemate? #if there is a valid move out, see if king is still in check.
-          #to do - needs check? method
+        # if valid_moves #if there is a valid move out, see if king is still in check.
+            #to do - needs check? method
+        # end
+      else
+        return false #return false if there are no threathening pieces
       # end
-      return valid_moves #true or #false
-    else
-      return false #return false if there are no threathening pieces
     end 
   end
-
 
   def next_player(color)    
     if color == 'white'   
