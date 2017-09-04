@@ -7,7 +7,7 @@ RSpec.describe Piece do
   #   @p = King.create(x: 4, y: 4, color: "white", game: @g)
   #   @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
   # end
-  
+
   describe "opponents_check? for game" do
     it "should return threatening pieces" do
       # @g = Game.new
@@ -27,6 +27,23 @@ RSpec.describe Piece do
       @q = Bishop.create(x: 5, y: 5, color: "black", game: @g)
     #   # @g.reload
       expect(@g.checkmate(@k)).to be(false)
+    end
+
+     it "determine if the game is in checkmate" do
+      g = Game.new
+      k = King.create(x: 4, y: 4, color: "white", game: @g)
+      q = Queen.create(x: 4, y: 3, color: "black", game: @g)
+      q = Bishop.create(x: 5, y: 5, color: "black", game: @g)
+      b = Piece.create(x: 3, y: 5, color: "white", game: @g)
+      b = Piece.create(x: 4, y: 5, color: "white", game: @g)
+      # b = Piece.create(x: 5, y: 5, color: "white", game: @g)
+      b = Piece.create(x: 3, y: 4, color: "white", game: @g)
+      b = Piece.create(x: 5, y: 4, color: "white", game: @g)
+      b = Piece.create(x: 3, y: 3, color: "white", game: @g)
+      # b = Piece.create(x: 4, y: 3, color: "white", game: @g)
+      b = Piece.create(x: 5, y: 3, color: "black", game: @g)
+    #   # @g.reload
+      expect(g.checkmate(k)).to be(true)
     end
   end
 

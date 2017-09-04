@@ -55,11 +55,13 @@ class Game < ApplicationRecord
   end
 
   def opponents_check?(king)
+    x=king.x
+    y=king.y
     # if king is in check, returns list of pieces that threaten it
     threatening_pieces = []
     opponents_pieces = self.pieces.where(:color => "black" )
     opponents_pieces.each do |piece|
-      if piece.move_to!(king.x, king.y)
+      if piece.move_to!(x, y)
         threatening_pieces << piece
       end
     end
@@ -70,17 +72,17 @@ class Game < ApplicationRecord
   
   def checkmate(king)
     #assume moves vaidated before here
-  #   #look for threathening pieces
     threatening_pieces = opponents_check?(king)
-  #   #if there are threatening pieces move king to see if he can get out of check
-    if threathening_pieces
-      moves = fake_moves
-      # return false if moves #not in checkmate, king has valid move out
-      return moves
-    end 
-  #   #if there are no threathening pieces game is not in checkmate
-  #   return false
-  #
+    # if there are threatening pieces move king to see if he can get out of check
+    # if threatening_pieces.any?
+      puts fake_moves
+      # undefined local variable or method `fake_moves' for #<Game:0x007fdf44fffc00>
+     
+      # return false if moves = king.fake_moves
+      # return true if nil
+    # else
+      # return false #game is not in check if there are no threatening pieces
+    # end 
   end
 
   def forfeit!(user)

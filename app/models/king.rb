@@ -84,7 +84,7 @@ class King < Piece
         end
       end
     end
-    return moves.any?
+    return moves.any? #true or #false
   end
 
   def unicode_point
