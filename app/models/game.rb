@@ -80,11 +80,9 @@ class Game < ApplicationRecord
           end
         end
       end
-      #valid_moves = [[3, 3], [4, 3], [5, 3], [3, 4], [5, 4], [3, 5], [4, 5], [5, 5]]
       # if valid_moves #if there is a valid move out, see if king is still in check.
-        
+          #to do - needs check? method
       # end
-
       return valid_moves #true or #false
     else
       return false #return false if there are no threathening pieces
