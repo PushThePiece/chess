@@ -2,6 +2,34 @@ require 'rails_helper'
 
 RSpec.describe Piece do
 
+  # before(:example) do 
+  #   @g = Game.new
+  #   @p = King.create(x: 4, y: 4, color: "white", game: @g)
+  #   @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
+  # end
+  
+  describe "opponents_check? for game" do
+    it "should return threatening pieces" do
+      # @g = Game.new
+      # @k = King.create(x: 4, y: 4, color: "white", game: @g)
+      # @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
+      # # @b = Bishop.create(x: 5, y: 5, color: "black", game: @g)
+      # @g.reload
+      # expect(@g.opponents_check?(@k)).to eq(@q)
+    end
+  end
+
+   describe "checkmate for game" do
+    it "determine if the game is in checkmate" do
+      @g = Game.new
+      @k = King.create(x: 4, y: 4, color: "white", game: @g)
+      @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
+      @q = Bishop.create(x: 5, y: 5, color: "black", game: @g)
+    #   # @g.reload
+      expect(@g.checkmate(@k)).to be(false)
+    end
+  end
+
   before(:example) do 
     @g = Game.create
     @p = Piece.create(x: 3, y: 3, color: "white", game: @g)

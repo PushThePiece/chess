@@ -1,8 +1,8 @@
 class Game < ApplicationRecord
-  after_create :populate_game!
+  # after_create :populate_game!
   has_many :pieces
-  belongs_to :white_player, class_name: 'User', foreign_key: 'white_user_id'
-  belongs_to :black_player, class_name: 'User', foreign_key: 'black_user_id'
+  # belongs_to :white_player, class_name: 'User', foreign_key: 'white_user_id'
+  # belongs_to :black_player, class_name: 'User', foreign_key: 'black_user_id'
 
   def get_piece_at(x,y)
     return Piece.where(:x => x, :y => y, :game_id => id).last
@@ -50,37 +50,28 @@ class Game < ApplicationRecord
     return true
   end
   
-  # I don't think code here is being used
-  # def check?(color)
-  #   king = pieces.find_by(type: 'King', color: color)
-  #   opponents = pieces_remaining(!color)
+  def in_check?
+    fake_moves.any? #this is redundant code...
+  end
 
-  #   opponents.each do |piece|
-  #     if piece.valid_move?(king.x, king.y)
-  #       @piece_causing_check = piece
-  #       return true
-  #     end
-  #   end
-  #   false
-  # end
-  def opponents_causing_check?(king)
-    # # if king is in check, returns list of pieces that threaten it
-    # threatening_pieces = []
-    # opponents_pieces = self.pieces.where(color: !king.color)
-    # opponents_pieces.each do |piece|
-    #   if piece.valid_move?(king.x, king.y)
-    #     threatening_pieces << piece
-    #   end
-    # end
-    # if threatening_pieces.any?
-    #   return threatening_pieces
+  def opponents_check?(king)
+    # if king is in check, returns list of pieces that threaten it
+    threatening_pieces = []
+    opponents_pieces = self.pieces.where(:color => "black" )
+    opponents_pieces.each do |piece|
+      if piece.move_to!(king.x, king.y)
+        threatening_pieces << piece
+      end
+    end
+    # threatening_pieces.any?
+      return threatening_pieces
     # end
   end
   
   def checkmate(king)
     #assume moves vaidated before here
   #   #look for threathening pieces
-  #   threatening_pieces = opponents_causing_check?(king)
+    threatening_pieces = opponents_check?(king)
   #   #if there are threatening pieces move king to see if he can get out of check
   #   if threathening_pieces
   #     moves = fake_moves(king.x, king.y)
