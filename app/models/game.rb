@@ -64,6 +64,7 @@ class Game < ApplicationRecord
     false
   end
 
+
   def ally_on_board(color)
     pieces.where(x: 1..8, y: 8..1, color: color.to_s).to_a
   end
@@ -87,6 +88,15 @@ class Game < ApplicationRecord
     else
       forfeit_color = 'black'
     end
+  end
+
+  def next_player(color)    
+    if color == 'white'   
+      update_attributes(turn: black_user_id)    
+    else    
+      update_attributes(turn: white_user_id)    
+    end   
+
   end
 
 end

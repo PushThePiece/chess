@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+
   context 'is created' do
     before(:each) do
       @game = Game.create
@@ -33,4 +34,5 @@ RSpec.describe Game, type: :model do
         expect(@game.check?('white')).to eq false
       end
     end
+
 end
