@@ -62,4 +62,16 @@ class Game < ApplicationRecord
     false
   end
 
+  def pieces_remaining(color)
+    pieces.includes(:game).where(x: 1..8, y: 8..1, color: color.to_s)
+  end
+
+  def forfeit!(user)
+    if user == 'white_user_id'
+      forfeit_color = 'white'
+    else
+      forfeit_color = 'black'
+    end
+  end
+
 end
