@@ -21,6 +21,11 @@ class GamesController < ApplicationController
     @game = current_game
   end
 
+  def forfeit
+    current_game.forfeit!(current_user)
+    flash[:alert] = "You have forfeited the game."
+    redirect_to games_path
+  end
 
   private
 
@@ -28,9 +33,5 @@ class GamesController < ApplicationController
     Game.where(id: params[:id]).last
   end
 
-  def forfeit
-    current_game.forfeit!(current_user)
-    flash[:alert] = "You have forfeited the game."
-    redirect_to games_path
-  end
+
 end

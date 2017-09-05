@@ -50,20 +50,35 @@ class Game < ApplicationRecord
   end
   
   def check?(color)
-    king = pieces.find_by(type: 'King', color: color)
-    opponents = pieces_remaining(!color)
+    king = find_king(color)
+    square_under_attack?(color, king.x, king.y)
+  end
 
-    opponents.each do |piece|
-      if piece.valid_move?(king.x, king.y)
-        @piece_causing_check = piece
-        return true
-      end
+  def square_under_attack?(color, x, y)
+    enemies = enemies_on_board(color)
+    @enemies_causing_check = []
+    enemies.each do |enemy|
+      @enemies_causing_check << enemy if enemy.valid_move?(dest_x, dest_y) == true
     end
+    return true if @enemies_causing_check.any?
     false
   end
 
+  def ally_on_board(color)
+    pieces.where(x: 1..8, y: 8..1, color: color.to_s).to_a
+  end
+
+  def enemies_on_board(color)
+    opposite_color = color == 'black' ? 'white' : 'black'
+    pieces.where(x: 1..8, y: 8..1, color: opposite_color).to_a
+  end
+
   def pieces_remaining(color)
-    pieces.includes(:game).where(x: 1..8, y: 8..1, color: color.to_s)
+    pieces.includes(:game).where(x: 1..8, y: 8..1, color: color.to_s).to_a
+  end
+
+  def find_king(color)
+    pieces.find_by(type: 'King', color: color.to_s)
   end
 
   def forfeit!(user)
