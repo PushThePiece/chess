@@ -49,7 +49,7 @@ RSpec.describe Piece do
     end
 
     it "should return true if destination square is adjacent" do
-      expect(@p.is_adjacent?(3,3)).to be(true)
+      expect(@p.is_adjacent?(3,4)).to be(true)
     end
 
     it "should return true if destination square is adjacent" do
