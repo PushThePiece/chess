@@ -58,12 +58,23 @@ class Game < ApplicationRecord
     enemies = enemies_on_board(color)
     @enemies_causing_check = []
     enemies.each do |enemy|
-      @enemies_causing_check << enemy if enemy.valid_move?(dest_x, dest_y) == true
+      if enemy.valid_move?(x, y) == true
+        @enemies_causing_check << enemy
+      end
     end
     return true if @enemies_causing_check.any?
     false
   end
 
+  def capture_enemy_causing_check?(color)
+    allies = ally_on_board(color)
+
+    allies.each do |ally|
+      @enemies_causing_check.each do |enemy|
+        if ally.valid_move?(dest_x, dest_y) == true
+      end
+    end
+  end
 
   def ally_on_board(color)
     pieces.where(x: 1..8, y: 8..1, color: color.to_s).to_a
@@ -72,10 +83,6 @@ class Game < ApplicationRecord
   def enemies_on_board(color)
     opposite_color = color == 'black' ? 'white' : 'black'
     pieces.where(x: 1..8, y: 8..1, color: opposite_color).to_a
-  end
-
-  def pieces_remaining(color)
-    pieces.includes(:game).where(x: 1..8, y: 8..1, color: color.to_s).to_a
   end
 
   def find_king(color)
@@ -96,7 +103,5 @@ class Game < ApplicationRecord
     else    
       update_attributes(turn: white_user_id)    
     end   
-
   end
-
 end
