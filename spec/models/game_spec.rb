@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Game, type: :model do
 
 
+
   describe "checkmate for game" do
     it "determines if the game is in checkmate" do
       @g = Game.new
@@ -12,7 +13,7 @@ RSpec.describe Game, type: :model do
       @p1= Piece.create(x: 1, y: 6, color: "black", game: @g)
       # [[3, 3], [4, 3], [5, 3], [3, 4], [5, 4], [3, 5], [4, 5], [5, 5]]
       @g.reload
-      # expect(@g.checkmate(@k)).to be(true)
+      # expect(@g.checkmate?(@k)).to be(true)
     end
   end
   describe "stalemate for game" do 

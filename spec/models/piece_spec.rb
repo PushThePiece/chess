@@ -24,14 +24,41 @@ RSpec.describe Piece do
       other = Piece.create(x: 5, y: 5, color: "white", game: @g)
       expect(@p.move_to!(5,5)).to be(false)
     end
+
+    it "should return false if destination is occupied by same color piece" do
+      other = Piece.create(x: 5, y: 4, color: "white", game: @g)
+      expect(@p.move_to!(5,5)).to be(true)
+    end
   end
 
   describe "is_obstructed? method" do
+    it "should return false if a piece is not obstructing path to destination square" do
+      other = Piece.create(x: 5, y: 5, color: "white", game: @g)
+      expect(@p.is_obstructed?(2,2)).to be(false)      
+    end
+
     it "should return true if a piece is obstructing path to destination square" do
       other = Piece.create(x: 5, y: 5, color: "white", game: @g)
       expect(@p.is_obstructed?(7,7)).to be(true)      
     end
   end
+
+  describe "is_adjacent? method for piece" do
+    it "should return false if destination square isn't adjacent" do
+      expect(@p.is_adjacent?(1,1)).to be(false)
+    end
+
+    it "should return true if destination square is adjacent" do
+      # expect(@p.is_adjacent?(3,3)).to be(true)
+    end
+
+    it "should return true if destination square is adjacent" do
+      # expect(@p.is_adjacent?(4,3)).to be(true)
+    end
+  end
+end
+
+  
 
     # it "should successfully create and store a piece" do
     #   game = Game.create
@@ -139,4 +166,3 @@ RSpec.describe Piece do
 #     expect(q.valid_move?(5,3)).to be(true)
 #     expect(q.valid_move?(3,5)).to be(false)
 #   end
-end

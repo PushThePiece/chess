@@ -70,6 +70,21 @@ class King < Piece
     return true
   end
 
+  def valid_moves?
+    x=self.x
+    y=self.y
+    valid_moves = [] 
+    ((y-1)..(y+1)).each do |y|
+      ((x-1)..(x+1)).each do |x|
+        if valid_move?(x,y) #true/false 
+        # if get_piece_at(x,y).nil? && king.move_to!(x,y)
+          valid_moves<< [x,y]
+        end
+      end
+    end
+    return valid_moves
+  end
+
   def unicode_point
     color == 'white' ? '&#9812' : '&#9818'
   end

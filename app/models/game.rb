@@ -71,6 +71,7 @@ class Game < ApplicationRecord
         x = move[0] #check to see if King is in check after move.
         y = move[1]
         return true if square_under_attack?(king.color, x, y) # > 2?
+      end
     end 
     return true #in check with no valid moves
   end
@@ -88,7 +89,6 @@ class Game < ApplicationRecord
     end
     return true if @enemies_causing_check.any?
     false
-
   end
 
   def ally_on_board(color)
@@ -124,18 +124,4 @@ class Game < ApplicationRecord
     end   
   end
 
-  def valid_moves?(king)
-    x=king.x
-    y=king.y
-    valid_moves = [] 
-    ((y-1)..(y+1)).each do |y|
-      ((x-1)..(x+1)).each do |x|
-        if valid_move?(x,y)
-        # if get_piece_at(x,y).nil? && king.move_to!(x,y)
-          valid_moves<<[x,y]
-        end
-      end
-    end
-    return valid_moves
-  end
 end
