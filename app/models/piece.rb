@@ -85,6 +85,10 @@ class Piece < ApplicationRecord
     update_attributes(:x => nil, :y => nil)
   end
 
+  def player
+    color = 'white'? game.white_player : game.black_player
+  end
+
 
   def coord_to_alg_notation(x, y)
     alg = ""

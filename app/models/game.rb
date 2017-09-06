@@ -3,6 +3,9 @@ class Game < ApplicationRecord
   after_create :populate_game!
   has_many :pieces
 
+  belongs_to :black_player, class_name: "User", foreign_key: :black_user_id, optional: :true
+  belongs_to :white_player, class_name: "User", foreign_key: :white_user_id
+
   def get_piece_at(x,y)
     return Piece.where(:x => x, :y => y, :game_id => id).last
   end
