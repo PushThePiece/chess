@@ -24,9 +24,7 @@ class Piece < ApplicationRecord
   
   # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
-
     return !game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y)
-
   end
 
   def can_capture?(dest_x, dest_y)
@@ -90,12 +88,8 @@ class Piece < ApplicationRecord
   end
 
   def opponent(color)
-    byebug
-    color = 'white' ? game.black_player : game.white_player
+    color == 'white' ? game.black_player : game.white_player
   end
-
-
-
 
   def coord_to_alg_notation(x, y)
     alg = ""
