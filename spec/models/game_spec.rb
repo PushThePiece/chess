@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  before(:example) do 
-  # context 'is created' do
-  #   before(:each) do
+
+  context 'is created' do
+    before(:each) do
       @game = Game.create
     end
-  describe "create game" do
+
     it 'has 32 pieces' do
       expect(@game.pieces.count).to eq(32)
     end
