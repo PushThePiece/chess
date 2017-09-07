@@ -1,5 +1,6 @@
 class PiecesController < ApplicationController
-
+  before_action :next_player, only: [:update]
+  
   def show
     @piece = Piece.find(params[:id])
     @current_game = current_game
@@ -24,6 +25,13 @@ class PiecesController < ApplicationController
 
   def piece_params
     params.require(:piece).permit(:x, :y)
+  end
+
+  def next_player
+    @piece = Piece.find(params[:id])
+    @game = @piece.game
+    @next_player = @piece.opponent
+    @game.update_attributes(turn: @next_player)
   end
 
 end

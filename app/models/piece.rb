@@ -89,6 +89,10 @@ class Piece < ApplicationRecord
     color = 'white'? game.white_player : game.black_player
   end
 
+  def opponent
+    color = 'white'? game.black_player : game.white_player
+  end
+
 
   def coord_to_alg_notation(x, y)
     alg = ""

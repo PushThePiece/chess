@@ -93,13 +93,17 @@ class Game < ApplicationRecord
     end
   end
 
-  def next_player(color)    
-    if color == 'white'   
-      update_attributes(turn: black_user_id)    
-    else    
-      update_attributes(turn: white_user_id)    
-    end   
-
+  def player
+    color = 'white'? white_player : black_player
   end
+
+  # def next_player(color)    
+  #   if color == 'white'   
+  #     update_attributes(turn: black_user_id)    
+  #   else    
+  #     update_attributes(turn: white_user_id)    
+  #   end   
+
+  # end
 
 end
