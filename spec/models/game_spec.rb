@@ -8,7 +8,7 @@ RSpec.describe Game, type: :model do
     end
 
     it 'has 32 pieces' do
-      expect(@game.pieces.count).to eq(32)
+      expect(pieces.count).to eq(32)
     end
 
     it 'has no pieces in starting position' do
