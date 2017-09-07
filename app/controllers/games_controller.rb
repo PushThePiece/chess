@@ -6,7 +6,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(white_player: current_user, turn: current_user)
+    @game = Game.create(white_player: current_user, turn: current_user.id)
     flash[:alert] = "Waiting for another player to join game."
     redirect_to game_path(@game)
   end
@@ -32,6 +32,5 @@ class GamesController < ApplicationController
   def current_game
     Game.where(id: params[:id]).last
   end
-
 
 end

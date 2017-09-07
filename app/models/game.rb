@@ -93,9 +93,9 @@ class Game < ApplicationRecord
     end
   end
 
-  def player
-    color = 'white'? white_player : black_player
-  end
+  # def player
+  #   color = 'white'? white_player : black_player
+  # end
 
   # def next_player(color)    
   #   if color == 'white'   
