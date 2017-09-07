@@ -8,9 +8,6 @@ FactoryGirl.define do
   end
 
   factory :game do
-    # white_player
-    # black_player
-
     white_user_id 1
     black_user_id 2
     turn          1
