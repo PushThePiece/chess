@@ -1,15 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe Game, type: :model do
+RSpec.describe Game do
 
   context 'is created' do
     before(:each) do
-      @game = Game.create
+      @game = FactoryGirl.create(:game)
     end
 
     it 'has 32 pieces' do
       expect(@game.pieces.count).to eq(32)
     end
+    # byebug
 
     it 'has no pieces in starting position' do
       (1..8).each do |x|
