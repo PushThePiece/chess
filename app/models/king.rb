@@ -51,7 +51,9 @@ class King < Piece
     obstr_range.each do |sq|
       return false if game.is_occupied?(sq, y)
       opp_color = (color == "white") ? "black" : "white"
-      game.pieces.where(color: opp_color).each {|p| return false if p.valid_move?(sq, y) }
+      game.pieces.where(color: opp_color).each do |thepiece| 
+        return false if thepiece.valid_move?(sq, y)
+      end
     end
     return true
   end
