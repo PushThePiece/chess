@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Piece, type: :King do
 
-  before(:example) do
-    @g = Game.create
+  before(:each) do
+    @g = FactoryGirl.create(:game)
     @k = King.create(x: 4, y: 4, color: "white", game: @g)
   end
 
@@ -25,9 +25,9 @@ RSpec.describe Piece, type: :King do
     it "should return false if castling through opponent's attacking range" do
       @k.update_attributes(x: 5, y: 1)
       r = Rook.create(x: 8, y: 1, color: "white", game: @g)
-      kn = Knight.create(x: 5, y: 3, color: "black", game: @g)
-      @g.get_piece_at(6,1).remove_from_game!
-      @g.get_piece_at(7,1).remove_from_game!
+      kn = Knight.create(x: 5, y: 3, color: "black", game: @g) #attacking (6,1)
+      @g.get_piece_at(6,1).remove_from_game! if !@g.get_piece_at(6,1).nil? #no obstructions
+      @g.get_piece_at(7,1).remove_from_game! if !@g.get_piece_at(7,1).nil?
       expect(@k.move_to!(7,1)).to be(false) #attempt to castle
     end
   end
