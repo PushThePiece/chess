@@ -61,7 +61,7 @@ class Game < ApplicationRecord
     enemies = enemies_on_board(color)
     @enemies_causing_check = []
     enemies.each do |enemy|
-      @enemies_causing_check << enemy if enemy.valid_move?(dest_x, dest_y) == true
+      @enemies_causing_check << enemy if enemy.valid_move?(x, y) == true
     end
     return true if @enemies_causing_check.any?
     false
@@ -69,20 +69,20 @@ class Game < ApplicationRecord
 
 
   def ally_on_board(color)
-    pieces.where(x: 1..8, y: 8..1, color: color.to_s).to_a
+    pieces.where(x: 1..8, y: 1..8, color: color)
   end
 
   def enemies_on_board(color)
-    opposite_color = color == 'black' ? 'white' : 'black'
-    pieces.where(x: 1..8, y: 8..1, color: opposite_color).to_a
+    opposite_color = (color == 'black') ? 'white' : 'black'
+    pieces.where(x: 1..8, y: 1..8, color: opposite_color)
   end
 
   def pieces_remaining(color)
-    pieces.includes(:game).where(x: 1..8, y: 8..1, color: color.to_s).to_a
+    pieces.includes(:game).where(x: 1..8, y: 1..8, color: color)
   end
 
   def find_king(color)
-    pieces.find_by(type: 'King', color: color.to_s)
+    pieces.where(type: 'King', color: color).last
   end
 
   def forfeit!(user)

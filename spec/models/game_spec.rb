@@ -10,7 +10,6 @@ RSpec.describe Game do
     it 'has 32 pieces' do
       expect(@game.pieces.count).to eq(32)
     end
-    # byebug
 
     it 'has no pieces in starting position' do
       (1..8).each do |x|
@@ -20,20 +19,17 @@ RSpec.describe Game do
       end
     end
   end
-    describe 'check?' do
-      before(:each) do
-        @game = Game.create
-        @king = King.new(x: 4, y: 4, color: 'white')
-        @queen = Queen.new(x: 6, y: 4, color: 'white')
-      end
-
-      it 'false if White King in check' do
-        
-        @game.pieces << @queen
-        @game.pieces << @king
-
-        expect(@game.check?('white')).to eq false
-      end
+  
+  describe 'check?' do
+    before(:each) do
+      @game = FactoryGirl.create(:game)
+      @game.pieces.destroy_all
+      @king = King.create(x: 4, y: 4, color: 'white', game: @game)
+      @queen = Queen.create(x: 6, y: 4, color: 'black', game: @game)
     end
 
+    it 'should return true if the White King is in check' do
+      expect(@game.check?('white')).to eq true
+    end
+  end
 end
