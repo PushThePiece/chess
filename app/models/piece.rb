@@ -24,9 +24,7 @@ class Piece < ApplicationRecord
   
   # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
-
     return !game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y)
-
   end
 
   def can_capture?(dest_x, dest_y)
@@ -85,6 +83,13 @@ class Piece < ApplicationRecord
     update_attributes(:x => nil, :y => nil)
   end
 
+  def player
+    color == 'white' ? game.white_player : game.black_player
+  end
+
+  def opponent(color)
+    color == 'white' ? game.black_player : game.white_player
+  end
 
   def coord_to_alg_notation(x, y)
     alg = ""
