@@ -30,7 +30,12 @@ class GamesController < ApplicationController
       format.json { render json: @game.pieces }
       format.html
     end
-    if current_game.check?(current_game.turn)
+    
+    color = 'black'
+    if current_game.white_user_id == current_game.turn
+      color = 'white'
+    end
+    if current_game.check?(color)
       flash[:alert] = "#{current_game.turn} player is in check!"
     end
   end
