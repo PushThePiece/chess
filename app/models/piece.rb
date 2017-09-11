@@ -69,17 +69,6 @@ class Piece < ApplicationRecord
     dest_x - x == dest_y - y || dest_x - x == (-1)*(dest_y - y)
   end
 
-  # def is_adjacent?(dest_x, dest_y)
-  #   x=self.x
-  #   y=self.y
-  #   puts x 
-  #   ((y-1)..(y+1)).each do |y|
-  #     ((x-1)..(x+1)).each do |x|
-  #       return false unless dest_x == x && dest_y == y
-  #     end
-  #   end
-  # end
-
   def is_adjacent?(dest_x, dest_y)
     return false unless [0,1].include?((dest_x - x).abs) && [0,1].include?((dest_y - y).abs)
     true

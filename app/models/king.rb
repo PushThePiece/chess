@@ -82,11 +82,13 @@ class King < Piece
     valid_moves = [] 
     ((y-1)..(y+1)).each do |y|
       ((x-1)..(x+1)).each do |x|
-        if valid_move?(x,y) && !game.square_under_attack?(self.color,x,y) #this is not showing that pieces threathen when they are obstructed by self. 
-          valid_moves<< [x,y]
+        if valid_move?(x,y) && !game.square_under_attack?(self.color,x,y) 
+          #this is not showing that pieces threathens when they are obstructed by self. 
+          valid_moves << [x,y]
         end
       end
     end
+    byebug
     return true if valid_moves 
     false
   end

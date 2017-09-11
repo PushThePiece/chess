@@ -54,7 +54,8 @@ class Game < ApplicationRecord
   def checkmate?(king)
     #assume moves vaidated before here
     return false if check?(king.color) == false
-    return true if king.valid_moves? == true
+    return true if king.valid_moves? == false
+    # false
   end
   
   def check?(color)
