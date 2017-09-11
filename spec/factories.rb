@@ -1,6 +1,6 @@
 FactoryGirl.define do 
-  factory :user do 
-    sequence :email do |n|
+  factory :user, aliases: [:white_player, :black_player] do
+    sequence(:email) do |n|
       "dummyEmail#{n}@gmail.com"
     end
   password              "secretPassword"
@@ -8,8 +8,8 @@ FactoryGirl.define do
   end
 
   factory :game do
-    black_user_id 1
-    white_user_id 1
+    white_player 
+    turn { white_user_id }
+    black_player 
   end
-
 end
