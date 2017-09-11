@@ -3,8 +3,8 @@ class King < Piece
   def valid_move?(dest_x, dest_y) 
     return false if super == false
     return false unless is_adjacent?(dest_x, dest_y) || is_castle?(dest_x, dest_y)
-    if in_check?
-      return false unless is_adjacent?(dest_x, dest_y) && !game.square_under_attack?(color, dest_x, dest_y)
+    if is_adjacent?(dest_x, dest_y)
+      return false if game.square_under_attack?(color, dest_x, dest_y)
     elsif is_castle?(dest_x, dest_y)
       coords = get_castling_corner(dest_x, dest_y)
       return false unless can_castle?(coords[0], coords[1])

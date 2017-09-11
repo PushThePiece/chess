@@ -17,7 +17,7 @@ class GamesController < ApplicationController
   end
 
   def update
-    current_game.white_player.nil? ? current_game.update_attributes(white_player: current_user) : current_game.update_attributes(black_player: current_user)
+    current_game.white_user_id.nil? ? current_game.update_attributes(white_user_id: current_user.id) : current_game.update_attributes(black_user_id: current_user.id)
     flash[:alert] = "Let's play!"
     redirect_to game_path(current_game.id)
   end

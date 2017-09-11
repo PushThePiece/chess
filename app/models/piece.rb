@@ -7,29 +7,25 @@ class Piece < ApplicationRecord
   validates :y, numericality: { greater_than: 0, less_than: 9}, :allow_nil => true
 
   def move_to!(new_x, new_y)
-    
+
     return false if valid_move?(new_x, new_y) == false
 
-    unless game.is_occupied?(new_x, new_y) 
-      update_attributes(:x => new_x, :y => new_y)
-    else
-      target_piece = game.get_piece_at(new_x, new_y)
-      target_piece.remove_from_game!
-      update_attributes(:x => new_x, :y => new_y)
+    old_x = x
+    old_y = y
+    target_piece = game.get_piece_at(new_x, new_y)
+    update_attributes(:x => new_x, :y => new_y)
+
+    if game.check?(game.turn)
+      #rollback
+      update_attributes(:x => old_x, :y => old_y)
+      return false
     end
+    target_piece.remove_from_game! if !target_piece.nil?
     update_attributes(:has_moved? => true)
     return true
-
   end
   
-  # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
-    # need logic to test if, in new board position,  king is out of check
-    # could be either by moving out of check or interposing a piece
-
-    # if game.check?(color)
-    #   my_king = find_king(color)
-    #   return false if game.square_under_attack?(color, dest_x, dest_y)
     return !game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y)
   end
 

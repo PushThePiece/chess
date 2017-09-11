@@ -30,13 +30,19 @@ RSpec.describe Game do
     it 'should return true if the White King is in check' do
       @king = King.create(x: 4, y: 4, color: 'white', game: @game)
       @queen = Queen.create(x: 6, y: 4, color: 'black', game: @game)
-      expect(@game.check?('white')).to eq true
+      expect(@game.check?(@game.white_user_id)).to eq true
     end
 
     it 'should return false if White King not in check' do
       @king = King.create(x: 4, y: 4, color: 'white', game: @game)
       @queen = Queen.create(x: 5, y: 6, color: 'black', game: @game)
-      expect(@game.check?('white')).to eq false
+      expect(@game.check?(@game.white_user_id)).to eq false
     end
+
+      # Add tests here for 
+      # a) requiring king to not move into check and 
+      # b) rolling back any move which results in being in check
+
   end
+
 end
