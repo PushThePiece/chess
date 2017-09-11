@@ -6,8 +6,8 @@ class PiecesController < ApplicationController
 
   def update
     if current_user == current_piece.player && current_user.id == current_game.turn && players_piece
-      current_piece.move_to!(piece_params["x"].to_i, piece_params["y"].to_i)
-      next_player(current_piece.color) 
+      result = current_piece.move_to!(piece_params["x"].to_i, piece_params["y"].to_i)
+      next_player(current_piece.color) if result == true
       redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
     else
       flash[:alert] = "It is not currently your turn or that is not your player piece"
