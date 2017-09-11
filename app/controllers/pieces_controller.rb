@@ -5,12 +5,15 @@ class PiecesController < ApplicationController
   end
 
   def update
-    if current_user == current_piece.player && current_user.id == current_game.turn && players_piece
-      result = current_piece.move_to!(piece_params["x"].to_i, piece_params["y"].to_i)
-      next_player(current_piece.color) if result == true
+    if !players_turn
+      flash[:alert] = "It is not your turn"
+      redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
+    elsif !players_piece
+      flash[:alert] = "That is not your piece"
       redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
     else
-      flash[:alert] = "It is not currently your turn or that is not your player piece"
+      result = current_piece.move_to!(piece_params["x"].to_i, piece_params["y"].to_i)
+      next_player(current_piece.color) if result == true
       redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
     end
   end
@@ -36,14 +39,12 @@ class PiecesController < ApplicationController
     current_game.update_attributes(turn: @next_player.id)
   end
 
+  def players_turn
+    return true if current_user.id == current_game.turn
+  end
+
   def players_piece
-    if current_piece.player == current_game.black_player && current_piece.color == 'black'
-      return true
-    elsif current_piece.player == current_game.white_player && current_piece.color == 'white'
-      return true
-    else
-      false
-    end
+    return true if current_user == current_piece.player
   end
    
 end
