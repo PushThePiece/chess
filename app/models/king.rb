@@ -81,6 +81,7 @@ class King < Piece
   def valid_moves?
     x=self.x
     y=self.y
+    # byebug
     valid_moves = [] 
     ((y-1)..(y+1)).each do |y|
       ((x-1)..(x+1)).each do |x|

@@ -66,22 +66,25 @@ class Game < ApplicationRecord
   #   return threatening_pieces
   # end
   
-  def checkmate(king)
+  def checkmate?(king)
     #assume moves vaidated before here
     return false if check?(king.color) == false
-    if valid_moves?(king)   
-      valid_moves?.each do |move| #[[5,5], [4,5]] #true in checkmate or #false has a move out
+    if king.valid_moves?   
+      king.valid_moves?.each do |move| #[[5,5], [4,5]] #true in checkmate or #false has a move out
         x = move[0] #check to see if King is in check after move.
         y = move[1]
+        # byebug
         return true if square_under_attack?(king.color, x, y) # > 2?
       end
     end 
+    # byebug
     return true #in check with no valid moves
   end
   
   def check?(color)
     king = find_king(color)
-    square_under_attack?(color, king.x, king.y)
+    return true if square_under_attack?(color, king.x, king.y)
+    false
   end
 
   def square_under_attack?(color, x, y)
@@ -90,7 +93,7 @@ class Game < ApplicationRecord
     enemies.each do |enemy|
       enemies_causing_check.push(enemy) if enemy.valid_move?(x, y)
     end
-    return true if !enemies_causing_check.empty?
+    return true if enemies_causing_check.any?
     false
   end
 
