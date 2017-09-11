@@ -6,20 +6,18 @@ class GamesController < ApplicationController
   end
 
   def create
-    # coinflip = Random.new.rand(2)
-    # p coinflip
-    # if coinflip == 0 
-    #   @game = Game.create(white_player: current_user, turn: current_user.id)
-    # elsif coinflip == 1 
-    #   @game = Game.create(black_player: current_user, turn: current_user.id)
-    # end
-    @game = Game.create(white_player: current_user, turn: current_user.id)
+    coinflip = Random.new.rand(2)
+    if coinflip == 0 
+      @game = Game.create(white_player: current_user, turn: current_user.id)
+    elsif coinflip == 1 
+      @game = Game.create(black_player: current_user, turn: current_user.id)
+    end
     flash[:alert] = "Waiting for another player to join game."
     redirect_to game_path(@game)
   end
 
   def update
-    current_game.update_attributes(black_player: current_user)
+    current_game.white_player.nil? ? current_game.update_attributes(white_player: current_user) : current_game.update_attributes(black_player: current_user)
     flash[:alert] = "Let's play!"
     redirect_to game_path(current_game.id)
   end

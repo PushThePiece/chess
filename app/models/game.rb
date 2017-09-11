@@ -4,7 +4,7 @@ class Game < ApplicationRecord
   has_many :pieces
 
   belongs_to :black_player, class_name: "User", foreign_key: :black_user_id, optional: :true
-  belongs_to :white_player, class_name: "User", foreign_key: :white_user_id
+  belongs_to :white_player, class_name: "User", foreign_key: :white_user_id, optional: :true
 
   def get_piece_at(x,y)
     return Piece.where(:x => x, :y => y, :game_id => id).last
@@ -51,8 +51,9 @@ class Game < ApplicationRecord
     return false if get_piece_at(x,y).nil? || get_piece_at(x,y).captured?
     return true
   end
-  
-  def check?(color)
+
+  def check?(turn)
+    color = (turn == white_user_id) ? "white" : "black"
     king = find_king(color)
     square_under_attack?(color, king.x, king.y)
   end

@@ -24,6 +24,12 @@ class Piece < ApplicationRecord
   
   # Will be overriden by specific pieces, which call super and then add their piece-specific checks
   def valid_move?(dest_x, dest_y)
+    # need logic to test if, in new board position,  king is out of check
+    # could be either by moving out of check or interposing a piece
+
+    # if game.check?(color)
+    #   my_king = find_king(color)
+    #   return false if game.square_under_attack?(color, dest_x, dest_y)
     return !game.is_occupied?(dest_x, dest_y) || can_capture?(dest_x, dest_y)
   end
 

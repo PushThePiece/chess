@@ -1,7 +1,7 @@
 class King < Piece
 
   def valid_move?(dest_x, dest_y) 
-    super
+    return false if super == false
     return false unless is_adjacent?(dest_x, dest_y) || is_castle?(dest_x, dest_y)
     if in_check?
       return false unless is_adjacent?(dest_x, dest_y) && !game.square_under_attack?(color, dest_x, dest_y)
