@@ -69,13 +69,18 @@ class Game < ApplicationRecord
   def checkmate?(king)
     #assume moves vaidated before here
     return false if check?(king.color) == false
-    if king.valid_moves?   
+    if king.valid_moves?
+      kings_valid_moves = []   
       king.valid_moves?.each do |move| #[[5,5], [4,5]] #true in checkmate or #false has a move out
         x = move[0] #check to see if King is in check after move.
         y = move[1]
         # byebug
-        return true if square_under_attack?(king.color, x, y) # > 2?
+        if square_under_attack?(king.color, x, y) == true
+          kings_valid_moves.push(x)
+        end
       end
+      return true if kings_valid_moves.count > 2
+      false
     end 
     # byebug
     return true #in check with no valid moves
