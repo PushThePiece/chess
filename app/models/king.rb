@@ -48,7 +48,6 @@ class King < Piece
   end
 
   def can_castle?(corner_pos_x, corner_pos_y)
-
     return false if has_moved?
     piece = game.get_piece_at(corner_pos_x,corner_pos_y)
     return false if piece.nil? || piece.type != "Rook" || piece.has_moved?
@@ -65,7 +64,6 @@ class King < Piece
   end
 
   def castle!(corner_pos_x, corner_pos_y)
-
     rook = game.get_piece_at(corner_pos_x, corner_pos_y)
     if corner_pos_x == 8
       update_attributes(x: 7, y: corner_pos_y)
@@ -81,17 +79,16 @@ class King < Piece
   def valid_moves?
     x=self.x
     y=self.y
-    # byebug
     valid_moves = [] 
     ((y-1)..(y+1)).each do |y|
       ((x-1)..(x+1)).each do |x|
-        if valid_move?(x,y) #true/false 
-        # if get_piece_at(x,y).nil? && king.move_to!(x,y)
+        if valid_move?(x,y) && !game.square_under_attack?(self.color,x,y) #this is not showing that pieces threathen when they are obstructed by self. 
           valid_moves<< [x,y]
         end
       end
     end
-    return valid_moves
+    return true if valid_moves 
+    false
   end
 
   def unicode_point
