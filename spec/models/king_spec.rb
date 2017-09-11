@@ -8,8 +8,14 @@ RSpec.describe Piece, type: :King do
   end
 
   describe "valid_move? for King" do
-    it "should return false if it is an illegal king move" do
+    it "should return false if it is an invalid king move" do
       expect(@k.valid_move?(3,6)).to be(false)
+    end
+
+    it "should return false if king doesn't move out of check" do
+      Rook.create(x: 4, y: 6, color: "black", game: @g)
+      expect(@k.move_to!(4,5)).to be(false) # still in check
+      expect(@k.move_to!(5,4)).to be(true) # moves out of check
     end
   end
 

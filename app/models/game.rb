@@ -59,11 +59,11 @@ class Game < ApplicationRecord
 
   def square_under_attack?(color, x, y)
     enemies = enemies_on_board(color)
-    @enemies_causing_check = []
+    enemies_causing_check = []
     enemies.each do |enemy|
-      @enemies_causing_check << enemy if enemy.valid_move?(x, y) == true
+      enemies_causing_check.push(enemy) if enemy.valid_move?(x, y)
     end
-    return true if @enemies_causing_check.any?
+    return true if !enemies_causing_check.empty?
     false
   end
 

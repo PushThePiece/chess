@@ -2,16 +2,19 @@ class King < Piece
 
   def valid_move?(dest_x, dest_y) 
     super
-    return true if is_adjacent?(dest_x, dest_y)
-    if is_castle?(dest_x, dest_y)
+    return false unless is_adjacent?(dest_x, dest_y) || is_castle?(dest_x, dest_y)
+    rook = game.pieces.last
+    if in_check?
+      return false unless is_adjacent?(dest_x, dest_y) && !game.square_under_attack?(color, dest_x, dest_y)
+    elsif is_castle?(dest_x, dest_y)
       coords = get_castling_corner(dest_x, dest_y)
-      return true if can_castle?(coords[0], coords[1])
+      return false unless can_castle?(coords[0], coords[1])
     end
-    return false
+    return true
   end
 
   def move_to!(dest_x, dest_y)
-    super
+    return false if super == false
     if is_castle?(dest_x, dest_y)
       coords = get_castling_corner(dest_x, dest_y)
       
@@ -22,6 +25,10 @@ class King < Piece
       end
     end
     update_attributes(:has_moved? => true)
+  end
+
+  def in_check?
+    return game.square_under_attack?(color, x, y)
   end
 
   def is_castle?(dest_x, dest_y)
