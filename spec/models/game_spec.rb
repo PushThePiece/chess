@@ -24,12 +24,19 @@ RSpec.describe Game do
     before(:each) do
       @game = FactoryGirl.create(:game)
       @game.pieces.destroy_all
-      @king = King.create(x: 4, y: 4, color: 'white', game: @game)
-      @queen = Queen.create(x: 6, y: 4, color: 'black', game: @game)
+      
     end
 
     it 'should return true if the White King is in check' do
+      @king = King.create(x: 4, y: 4, color: 'white', game: @game)
+      @queen = Queen.create(x: 6, y: 4, color: 'black', game: @game)
       expect(@game.check?('white')).to eq true
+    end
+
+    it 'should return false if White King not in check' do
+      @king = King.create(x: 4, y: 4, color: 'white', game: @game)
+      @queen = Queen.create(x: 5, y: 6, color: 'black', game: @game)
+      expect(@game.check?('white')).to eq false
     end
   end
 end
