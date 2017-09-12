@@ -1,5 +1,13 @@
 <script>
   $(function(){
+    // $( ".piece" ).selectable({
+    //   selected: function( event, ui ) {
+    //   console.log("selected");
+    //   console.log( event );
+    //   console.log( ui );
+
+    //   }
+    // });
     $('.piece').draggable( {
       containment: '#chess_board',
       snap: '.cell'
@@ -22,11 +30,13 @@
 
 <div class="container">
   <div class="game text-center">
-    <h3><%= "Hello #{current_user.email} you are playing #{@game.id}"%></h3>
+    <h3><%= "Hello #{current_user.email} you are playing Game No: #{@game.id}"%></h3>
     <ul>    
-      <li>Player(white_user_id):<%=@game.white_user_id%></li>    
-      <li>Player(black_user_id):<%=@game.black_user_id%></li>   
-      <li>Player Turn(user_id):<%=@game.turn%></li>
+      <li>White Player: <%=@game.white_player.email%></li> 
+      <% if @game.black_player.present? %>   
+      <li>Black Player: <%=@game.black_player.email%></li>   
+      <li data-game-turn="<%= @game.turn %>">Player Turn: <%=@game.player_turn %></li>
+      
     </ul>
   </div>
   <div class="board">
@@ -50,6 +60,7 @@
     <button type="button" class="btn btn-danger btn-md">
       <%= link_to 'Forfeit', forfeit_game_path(@game.id), method: :patch %>
     </button>
+    <% end %>
   </div>
  </div>
 

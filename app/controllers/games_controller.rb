@@ -26,11 +26,11 @@ class GamesController < ApplicationController
 
   def show
     @game = current_game
+    
     respond_to do |format|
       format.json { render json: @game.pieces }
       format.html
     end
-    
     color = 'black'
     if current_game.white_user_id == current_game.turn
       color = 'white'
