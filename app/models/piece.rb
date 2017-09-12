@@ -66,7 +66,9 @@ class Piece < ApplicationRecord
   end
 
   def is_diagonal?(dest_x, dest_y)
-    dest_x - x == dest_y - y || dest_x - x == (-1)*(dest_y - y)
+    xdiff = (dest_x - x).abs
+    ydiff = (dest_y - y).abs
+    xdiff == ydiff
   end
 
   def is_adjacent?(dest_x, dest_y)
