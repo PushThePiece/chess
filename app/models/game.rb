@@ -98,7 +98,7 @@ class Game < ApplicationRecord
     end
   end
 
-  def player_turn
+  def player_email
     turn == white_user_id ?  white_player.email : black_player.email
   end
 
