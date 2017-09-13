@@ -86,12 +86,12 @@ class Game < ApplicationRecord
     pieces.where(type: 'King', color: color).last
   end
 
-  def forfeit!(user)
-    if user == 'white_user_id'
-      forfeit_color = 'white'
-    else
-      forfeit_color = 'black'
-    end
+  def player(user)
+    user == white_user_id ? :white_user_id : :black_user_id
+  end
+  
+  def opponent(user)
+    player(user)
   end
 
   def player_email

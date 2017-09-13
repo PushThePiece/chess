@@ -50,6 +50,24 @@ RSpec.describe GamesController, type: :controller do
       expect(g.populate_game!)
     end
   end
+  
+  describe "games#foreit action" do
+
+    before(:example) do
+    game = FactoryGirl.create(:game)
+ 
+      it "should successfully update the state of the game to complete (1)" do
+        game.update_attributes(state: 1)
+        expect(game.state).to eq(1)
+      end
+
+      it "should update the non-forfeiteer to winner" do
+      game.update_attributes(winner: game.opponent.id)
+      expect(game.winner). to eq(game.opponent.id) 
+      end
+    end
+  end
+
 end
 
 

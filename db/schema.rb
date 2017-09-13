@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903164058) do
+ActiveRecord::Schema.define(version: 20170913212015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(version: 20170903164058) do
     t.integer "white_user_id"
     t.integer "black_user_id"
     t.integer "turn"
+    t.integer "state"
+    t.integer "winner"
+    t.index ["winner"], name: "index_games_on_winner", using: :btree
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -29,6 +32,8 @@ ActiveRecord::Schema.define(version: 20170903164058) do
     t.string  "color"
     t.boolean "has_moved?",   default: false
     t.boolean "passed_thru?", default: false
+    t.index ["game_id"], name: "index_pieces_on_game_id", using: :btree
+    t.index ["type"], name: "index_pieces_on_type", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

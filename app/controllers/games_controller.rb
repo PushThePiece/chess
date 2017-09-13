@@ -13,7 +13,7 @@ class GamesController < ApplicationController
     # elsif coinflip == 1 
     #   @game = Game.create(black_player: current_user, turn: current_user.id)
     # end
-    @game = Game.create(white_player: current_user, turn: current_user.id)
+    @game = Game.create(white_player: current_user, turn: current_user.id, state: 0, winner: nil)
     flash[:alert] = "Waiting for another player to join game."
     redirect_to game_path(@game)
   end
@@ -31,19 +31,23 @@ class GamesController < ApplicationController
       format.json { render json: @game.pieces }
       format.html
     end
-    color = 'black'
-    if current_game.white_user_id == current_game.turn
-      color = 'white'
-    end
-    if current_game.check?(color)
-      flash[:alert] = "#{current_game.turn} player is in check!"
+    @player = current_game.player(current_user)
+    if current_game.check?(@player)
+      flash[:alert] = "#{current_game.player(current_user)} player is in check!"
     end
   end
 
   def forfeit
-    current_game.forfeit!(current_user)
-    flash[:alert] = "You have forfeited the game."
+    @player = current_user
+    flash[:alert] = "#{@player.email} has forfeited the game."
+    @opponent = current_game.opponent(current_user)
+    current_game.update_attributes(state: 1)
+    current_game.update_attributes(winner: @opponent)
+
     redirect_to games_path
+  end
+
+  def destroy
   end
 
   private
