@@ -54,9 +54,24 @@ class Game < ApplicationRecord
   def checkmate?(king)
     #assume moves vaidated before here
     return false if check?(turn) == false
-    return false if king.valid_moves? == true
+    return true if king.valid_moves? == false 
     
-    true
+    #check to see if player can capture threatening pieces
+    #return false if player.can_capture?(opponent)
+
+    # see if another piece can block check
+    # return false if threatening piece can be blocked with player piece.
+
+    #check for moves out of check and if those moves are also in check.
+    if king.valid_moves? == true
+      moves_out_of_check = []
+      king.valid_moves.each do |x,y|
+        if square_under_attack?(king.color, x, y) == false
+          moves_out_of_check.push(x,y)
+        end
+      end
+    end
+    return false if moves_out_of_check.any?
   end
   
   def check?(turn)

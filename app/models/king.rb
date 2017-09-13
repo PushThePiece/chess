@@ -76,7 +76,7 @@ class King < Piece
     return true
   end
 
-  def valid_moves?
+  def valid_moves
     x=self.x
     y=self.y
     valid_moves = [] 
@@ -88,7 +88,10 @@ class King < Piece
         end
       end
     end
-    # byebug
+    return valid_moves
+  end
+  
+  def valid_moves?
     return true if valid_moves.any?
     false
   end

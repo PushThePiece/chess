@@ -7,10 +7,15 @@ RSpec.describe Game do
       @g = FactoryGirl.create(:game)
       @g.pieces.destroy_all
       @k = King.create(x: 4, y: 4, color: "white", game: @g)
-      @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
-      @b = Bishop.create(x: 6, y: 6, color: "black", game: @g)
-      @p = Pawn.create(x: 3, y: 5, color: "white", game: @g)
-      # expect(@g.checkmate?(@k)).to be(true)
+      @q = Queen.create(x: 2, y: 6, color: "black", game: @g)
+      @q = Queen.create(x: 3, y: 4, color: "white", game: @g)
+      @b1 = Bishop.create(x: 6, y: 6, color: "black", game: @g)
+      @b2 = Bishop.create(x: 5, y: 6, color: "black", game: @g)
+      @p2 = Pawn.create(x: 5, y: 4, color: "white", game: @g)
+      @p3 = Pawn.create(x: 3, y: 3, color: "white", game: @g)
+      @p4 = Pawn.create(x: 4, y: 3, color: "white", game: @g)
+      @p5 = Pawn.create(x: 5, y: 3, color: "white", game: @g)
+      expect(@g.checkmate?(@k)).to be(true)
     end
 
     it "determines if the game is in checkmate" do
