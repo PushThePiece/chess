@@ -58,7 +58,9 @@ class Game < ApplicationRecord
     # false
   end
   
-  def check?(color)
+  def check?(turn)
+    color = (turn == white_user_id) ? "white" : "black"
+
     king = find_king(color)
     return true if square_under_attack?(color, king.x, king.y)
     false
@@ -97,6 +99,10 @@ class Game < ApplicationRecord
     else
       forfeit_color = 'black'
     end
+  end
+
+  def player_email
+    turn == white_user_id ?  white_player.email : black_player.email
   end
 
 end
