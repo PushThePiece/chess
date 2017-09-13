@@ -53,11 +53,7 @@ class Game < ApplicationRecord
   end
   
   def check?(turn)
-    color = 'black'
-    if white_user_id == turn
-      color = 'white'
-    end
-
+    color = (turn == white_user_id) ? "white" : "black"
     king = find_king(color)
     square_under_attack?(color, king.x, king.y)
   end
