@@ -53,14 +53,14 @@ class Game < ApplicationRecord
   
   def checkmate?(king)
     #assume moves vaidated before here
-    return false if check?(king.color) == false
-    return true if king.valid_moves? == false
-    # false
+    return false if check?(turn) == false
+    return false if king.valid_moves? == true
+    
+    true
   end
   
   def check?(turn)
     color = (turn == white_user_id) ? "white" : "black"
-
     king = find_king(color)
     return true if square_under_attack?(color, king.x, king.y)
     false

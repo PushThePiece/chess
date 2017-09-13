@@ -88,8 +88,8 @@ class King < Piece
         end
       end
     end
-    byebug
-    return true if valid_moves 
+    # byebug
+    return true if valid_moves.any?
     false
   end
 
