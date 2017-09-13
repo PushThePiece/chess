@@ -82,7 +82,7 @@ class King < Piece
     valid_moves = [] 
     ((y-1)..(y+1)).each do |y|
       ((x-1)..(x+1)).each do |x|
-        if valid_move?(x,y) && !game.square_under_attack?(self.color,x,y) 
+        if valid_move?(x,y) #checks if adjacent, can_capture, not occupied, and if it will move itself into check
           #this is not showing that pieces threathens when they are obstructed by self. 
           valid_moves << [x,y]
         end
@@ -90,7 +90,7 @@ class King < Piece
     end
     return valid_moves
   end
-  
+
   def valid_moves?
     return true if valid_moves.any?
     false

@@ -53,25 +53,24 @@ class Game < ApplicationRecord
   
   def checkmate?(king)
     #assume moves vaidated before here
-    return false if check?(turn) == false
-    return true if king.valid_moves? == false 
-    
-    #check to see if player can capture threatening pieces
-    #return false if player.can_capture?(opponent)
+    return false if check?(turn) == false #makes sure in check.
+    return true if king.valid_moves? == false #checks if adjacent, can_capture, not occupied, and if it will move itself into check
+    return false if king.valid_moves? == true
+   end
 
-    # see if another piece can block check
-    # return false if threatening piece can be blocked with player piece.
-
+  def stalemate(king)
     #check for moves out of check and if those moves are also in check.
-    if king.valid_moves? == true
+    return true if king.valid_moves? == false
+    if king.valid_moves? == true  
       moves_out_of_check = []
       king.valid_moves.each do |x,y|
         if square_under_attack?(king.color, x, y) == false
-          moves_out_of_check.push(x,y)
+          moves_out_of_check.push([x,y])
         end
       end
+      return false if moves_out_of_check == nil
+      return true if moves_out_of_check !=nil
     end
-    return false if moves_out_of_check.any?
   end
   
   def check?(turn)
@@ -81,13 +80,17 @@ class Game < ApplicationRecord
     false
   end
 
-  def square_under_attack?(color, x, y)
+  def enemies_causing_check(color,x,y)
     enemies = enemies_on_board(color)
     enemies_causing_check = []
     enemies.each do |enemy|
       enemies_causing_check.push(enemy) if enemy.valid_move?(x, y)
     end
-    return true if enemies_causing_check.any?
+    return enemies_causing_check
+  end
+
+  def square_under_attack?(color, x, y)
+    return true if enemies_causing_check(color,x,y).any?
     false
   end
 
