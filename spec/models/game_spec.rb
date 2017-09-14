@@ -15,7 +15,7 @@ RSpec.describe Game do
       @p3 = Pawn.create(x: 3, y: 3, color: "white", game: @g)
       @p4 = Pawn.create(x: 4, y: 3, color: "white", game: @g)
       @p5 = Pawn.create(x: 5, y: 3, color: "white", game: @g)
-      # expect(@g.stalemate(@k)).to be(true)
+      expect(@g.stalemate(@k)).to be(true)
     end
   end
   describe "checkmate:" do
@@ -51,6 +51,25 @@ RSpec.describe Game do
       
       expect(@g.checkmate?(@k)).to be(true)
     end
+
+    it "determines if the game is in checkmate when an ally can capture threatening piece." do
+
+      # @g = FactoryGirl.create(:game)
+      # @g.pieces.destroy_all
+      # @k  = King.create(x: 4, y: 4, color: "white", game: @g)
+      # @q1 = Queen.create(x: 3, y: 4, color: "white", game: @g)
+      # @q2 = Queen.create(x: 3, y: 5, color: "black", game: @g)
+      # @b1 = Bishop.create(x: 4, y: 6, color: "black", game: @g)
+      # @b2 = Bishop.create(x: 5, y: 6, color: "black", game: @g)
+      # @p1 = Pawn.create(x: 3, y: 3, color: "white", game: @g)
+      # @p2 = Pawn.create(x: 4, y: 3, color: "white", game: @g)
+      # @p3 = Pawn.create(x: 5, y: 3, color: "white", game: @g)
+      # @p4 = Pawn.create(x: 5, y: 4, color: "white", game: @g)
+      # @p5 = Pawn.create(x: 5, y: 4, color: "white", game: @g)
+      
+      # expect(@g.checkmate?(@k)).to be(true)
+    end
+
   end
 
   context 'is created' do

@@ -58,12 +58,11 @@ class Game < ApplicationRecord
     
     if king.valid_moves? == true #if there are valid moves, check to make sure not moving into check...
       valid_moves_2=[]
-      color=king.color
       king.valid_moves.each do |p1,p2|
         oldx=king.x
         oldy=king.y
         king.move_to!(p1,p2)
-        if !square_under_attack?(color,p1,p2)
+        if !square_under_attack?(king.color,p1,p2)
           valid_moves_2.push([p1,p2])
         end
         king.move_to!(oldx,oldy)

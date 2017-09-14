@@ -77,9 +77,6 @@ class King < Piece
   end
 
   def valid_moves
-    x=self.x
-    y=self.y
-    color=self.color
     valid_moves = [] 
     ((y-1)..(y+1)).each do |y|
       ((x-1)..(x+1)).each do |x|
@@ -89,11 +86,7 @@ class King < Piece
         end
       end
     end
-    # byebug
     return valid_moves
-    
-
-
   end
 
   def valid_moves?
