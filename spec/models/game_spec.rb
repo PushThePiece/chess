@@ -15,7 +15,7 @@ RSpec.describe Game do
       @p3 = Pawn.create(x: 3, y: 3, color: "white", game: @g)
       @p4 = Pawn.create(x: 4, y: 3, color: "white", game: @g)
       @p5 = Pawn.create(x: 5, y: 3, color: "white", game: @g)
-      expect(@g.stalemate(@k)).to be(true)
+      # expect(@g.stalemate(@k)).to be(true)
     end
   end
   describe "checkmate:" do
@@ -35,34 +35,21 @@ RSpec.describe Game do
       expect(@g.checkmate?(@k)).to be(false)
     end
 
-    it "determines if the game is not in checkmate" do
+    it "determines if the game is in checkmate when checkmate is true" do
+
       @g = FactoryGirl.create(:game)
       @g.pieces.destroy_all
-      @k = King.create(x: 4, y: 4, color: "white", game: @g)
-      @q = Queen.create(x: 4, y: 3, color: "black", game: @g)
-      @b = Bishop.create(x: 6, y: 6, color: "black", game: @g)
-      @p = Rook.create(x: 3, y: 4, color: "white", game: @g)
-      @kn= Knight.create(x: 3, y: 5, color: "white", game: @g)
+      @k  = King.create(x: 4, y: 4, color: "white", game: @g)
+      @q1 = Queen.create(x: 3, y: 4, color: "white", game: @g)
+      @q2 = Queen.create(x: 3, y: 5, color: "black", game: @g)
+      @b1 = Bishop.create(x: 4, y: 6, color: "black", game: @g)
+      @b2 = Bishop.create(x: 5, y: 6, color: "black", game: @g)
+      @p1 = Pawn.create(x: 3, y: 3, color: "white", game: @g)
+      @p2 = Pawn.create(x: 4, y: 3, color: "white", game: @g)
+      @p3 = Pawn.create(x: 5, y: 3, color: "white", game: @g)
+      @p4 = Pawn.create(x: 5, y: 4, color: "white", game: @g)
       
-      expect(@g.checkmate?(@k)).to be(false)
-    end
-
-
-  end
-  describe "stalemate for game" do 
-    it "determines if the game is in stalemate" do
-      @g = Game.new
-      @k = King.create(x: 4, y: 4, color: "white", game: @g)
-      @p1 = Piece.create(x: 4, y: 3, color: "white", game: @g)
-      @p2 = Bishop.create(x: 6, y: 6, color: "black", game: @g)
-      # @p3 = Piece.create(x: 3, y: 5, color: "white", game: @g)
-      @p4 = Piece.create(x: 4, y: 5, color: "white", game: @g)
-      @p5 = Piece.create(x: 3, y: 4, color: "white", game: @g)
-      @p6 = Piece.create(x: 5, y: 4, color: "white", game: @g)
-      @p7 = Piece.create(x: 3, y: 3, color: "white", game: @g)
-      @p8 = Piece.create(x: 5, y: 3, color: "white", game: @g)
-   
-      expect(@g.stalemate(@k)).to be(true)
+      expect(@g.checkmate?(@k)).to be(true)
     end
   end
 

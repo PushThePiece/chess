@@ -79,21 +79,26 @@ class King < Piece
   def valid_moves
     x=self.x
     y=self.y
+    color=self.color
     valid_moves = [] 
     ((y-1)..(y+1)).each do |y|
       ((x-1)..(x+1)).each do |x|
-        if valid_move?(x,y) #checks if adjacent, can_capture, not occupied, and if it will move itself into check
+        if valid_move?(x,y) == true #checks if adjacent, can_capture, not occupied, and if it will move itself into check
           #this is not showing that pieces threathens when they are obstructed by self. 
-          valid_moves << [x,y]
+          valid_moves.push([x,y])
         end
       end
     end
+    # byebug
     return valid_moves
+    
+
+
   end
 
   def valid_moves?
     return true if valid_moves.any?
-    false
+    return false if valid_moves.empty?
   end
 
   def unicode_point
