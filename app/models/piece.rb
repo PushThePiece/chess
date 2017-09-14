@@ -73,7 +73,7 @@ class Piece < ApplicationRecord
 
   def is_adjacent?(dest_x, dest_y)
     return false unless [0,1].include?((dest_x - x).abs) && [0,1].include?((dest_y - y).abs)
-    true 
+    true
   end
 
   # Captured piece is denoted by a nil position

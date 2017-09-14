@@ -39,9 +39,6 @@ RSpec.describe Piece, type: :King do
   end
 end
 
-
-
-
   # it "should successfully kingside castle with the white king according to the rules of chess" do
   #   game = Game.create
   #   game.get_piece_at(6,1).remove_from_game!

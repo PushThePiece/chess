@@ -48,7 +48,6 @@ class King < Piece
   end
 
   def can_castle?(corner_pos_x, corner_pos_y)
-
     return false if has_moved?
     piece = game.get_piece_at(corner_pos_x,corner_pos_y)
     return false if piece.nil? || piece.type != "Rook" || piece.has_moved?
@@ -65,7 +64,6 @@ class King < Piece
   end
 
   def castle!(corner_pos_x, corner_pos_y)
-
     rook = game.get_piece_at(corner_pos_x, corner_pos_y)
     if corner_pos_x == 8
       update_attributes(x: 7, y: corner_pos_y)
@@ -76,6 +74,24 @@ class King < Piece
     end
     rook.update_attributes!(has_moved?: true)
     return true
+  end
+
+  def valid_moves
+    valid_moves = [] 
+    ((y-1)..(y+1)).each do |y|
+      ((x-1)..(x+1)).each do |x|
+        if valid_move?(x,y) == true #checks if adjacent, can_capture, not occupied, and if it will move itself into check
+          #this is not showing that pieces threathens when they are obstructed by self. 
+          valid_moves.push([x,y])
+        end
+      end
+    end
+    return valid_moves
+  end
+
+  def valid_moves?
+    return true if valid_moves.any?
+    return false if valid_moves.empty?
   end
 
   def unicode_point
