@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+  before_action :authenticate_player!, only: [:show]
 
   def index
     @games = Game.active.all
@@ -19,14 +20,9 @@ class GamesController < ApplicationController
   end
 
   def update
-    if current_user == current_game.white_player
-      flash[:alert] = 'You are already playing this game'
-      redirect_to games_path
-    else
-      current_game.update_attributes(black_player: current_user)
-      flash[:alert] = "Let's play!"
-      redirect_to game_path(current_game.id)
-    end
+    current_game.update_attributes(black_player: current_user)
+    flash[:alert] = "Let's play!"
+    redirect_to game_path(current_game.id)
   end
 
   def show
@@ -61,6 +57,10 @@ class GamesController < ApplicationController
 
   def current_game
     Game.where(id: params[:id]).last
+  end
+
+  def authenticate_player!
+    current_user == current_game.white_player || current_user == current_game.black_player
   end
 
 end
