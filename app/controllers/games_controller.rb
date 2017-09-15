@@ -25,15 +25,19 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = current_game
-    #not being used.
-    # respond_to do |format|
-    #   format.json { render json: @game.pieces }
-    #   format.html
-    # end
-    @player = current_game.player(current_user)
-    if current_game.check?(@player)
-      flash[:alert] = "#{current_game.player(current_user)} player is in check!"
+    if current_game.active?
+      @game = current_game
+      #not being used.
+      # respond_to do |format|
+      #   format.json { render json: @game.pieces }
+      #   format.html
+      # end
+      @player = current_game.player(current_user)
+        if current_game.check?(@player)
+          flash[:alert] = "#{current_game.player(current_user)} player is in check!"
+        end
+    else
+      return render text: 'Not Allowed', status: :forbidden
     end
   end
 
