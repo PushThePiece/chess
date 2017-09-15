@@ -26,7 +26,12 @@
       <h3><%= "Hello #{current_user.email} you are playing Game No: #{@game.id}"%></h3>
       <ul>    
         <li>White Player: <%=@game.white_player.email%></li> 
-        <li>Black Player: <%=@game.black_player.email%></li>   
+        <li>Black Player: <%=@game.black_player.email%></li>
+        <li>Opponent: <%=@game.opponent(current_user)%></li>
+        <li>help:<%=@game.opponent(current_user)%></li>
+        <li>Game State: <%=@game.state%></li>
+        <li>Game Winner: <%=@game.winner%></li>
+
         <li data-game-turn="<%= @game.turn %>">Player Turn: <%=@game.player_email %></li>  
       </ul>
     </div>

@@ -92,30 +92,31 @@ class Piece < ApplicationRecord
   def opponent(color)
     color == 'white' ? game.black_player : game.white_player
   end
+  
+  #not being used.
+  # def coord_to_alg_notation(x, y)
+  #   alg = ""
+  #   case x
+  #   when 1
+  #     alg = "A"
+  #   when 2
+  #     alg = "B"
+  #   when 3
+  #     alg = "C"
+  #   when 4
+  #     alg = "D"
+  #   when 5
+  #     alg = "E"
+  #   when 6
+  #     alg = "F"
+  #   when 7
+  #     alg = "G"
+  #   when 8
+  #     alg = "H"
+  #   end
+  #   alg += y.to_s
 
-  def coord_to_alg_notation(x, y)
-    alg = ""
-    case x
-    when 1
-      alg = "A"
-    when 2
-      alg = "B"
-    when 3
-      alg = "C"
-    when 4
-      alg = "D"
-    when 5
-      alg = "E"
-    when 6
-      alg = "F"
-    when 7
-      alg = "G"
-    when 8
-      alg = "H"
-    end
-    alg += y.to_s
-
-    alg
-  end
+  #   alg
+  # end
 
 end

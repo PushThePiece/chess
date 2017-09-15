@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @games = Game.all
+    @games = Game.active.all
   end
 
   def create
@@ -26,11 +26,11 @@ class GamesController < ApplicationController
 
   def show
     @game = current_game
-    
-    respond_to do |format|
-      format.json { render json: @game.pieces }
-      format.html
-    end
+    #not being used.
+    # respond_to do |format|
+    #   format.json { render json: @game.pieces }
+    #   format.html
+    # end
     @player = current_game.player(current_user)
     if current_game.check?(@player)
       flash[:alert] = "#{current_game.player(current_user)} player is in check!"
@@ -42,9 +42,9 @@ class GamesController < ApplicationController
     flash[:alert] = "#{@player.email} has forfeited the game."
     @opponent = current_game.opponent(current_user)
     current_game.update_attributes(state: 1)
-    current_game.update_attributes(winner: @opponent)
+    # current_game.update_attributes(winner: @opponent)
 
-    redirect_to games_path
+    redirect_to game_path(current_game)
   end
 
   def destroy
