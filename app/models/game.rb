@@ -142,12 +142,12 @@ class Game < ApplicationRecord
     pieces.where(type: 'King', color: color).last
   end
 
-  def player(user)
-    user == white_user_id ? :white_player : :black_player
+  def player(turn)
+    turn == white_player ? white_player : black_player
   end
   
   def opponent(user)
-    user == white_user_id ? :black_player : :white_player
+    user == white_player ? black_player.id : white_player.id
   end
 
   def player_email

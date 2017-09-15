@@ -20,42 +20,42 @@
   });
 </script>
 
-<div class="container">
-  <% if @game.black_player.present? %>  
-    <div class="game text-center">
-      <h3><%= "Hello #{current_user.email} you are playing Game No: #{@game.id}"%></h3>
-      <ul>    
-        <li>White Player: <%=@game.white_player.email%></li> 
+<div class="container"> 
+  <div class="game text-center">
+    <h3><%= "Hello #{current_user.email} you are playing Game No: #{@game.id}"%></h3>
+    <% if @game.black_player.present? %>
+      <ul>     
+        <li>White Player: <%=@game.white_player.email%></li>
         <li>Black Player: <%=@game.black_player.email%></li>
-        <li>Opponent: <%=@game.opponent(current_user)%></li>
-        <li>help:<%=@game.opponent(current_user)%></li>
-        <li>Game State: <%=@game.state%></li>
-        <li>Game Winner: <%=@game.winner%></li>
-
-        <li data-game-turn="<%= @game.turn %>">Player Turn: <%=@game.player_email %></li>  
+        <li>Player Turn: <%=@game.player_email %></li>  
       </ul>
-    </div>
-    <div class="board">
-      <table id="chess_board" cellpadding="0" cellspacing="0">
-        <% (8.downto(1)).each do |y| %> 
-          <tr> 
-            <% (1..8).each do |x| %>
-              <% piece = @game.get_piece_at(x, y) %>
-              <td class="cell" data-x="<%= x %>" data-y="<%= y %>" >
-                <% if piece.present? %>
-                  <div data-update-url="<%=piece_path(piece)%>" class="piece">
-                  <%= link_to piece.unicode_point.html_safe, piece_path(piece) %> 
-                  </div>
-                <% end %>  
-              </td>
-            <% end %>
-          </tr>
-        <% end %>
-      </table>
-      <br />
-      <button type="button" class="btn btn-danger btn-md">
-        <%= link_to 'Forfeit', forfeit_game_path(@game.id), method: :patch %>
-      </button>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+
+  <div class="board">
+    <table id="chess_board" cellpadding="0" cellspacing="0">
+      <% (8.downto(1)).each do |y| %> 
+        <tr> 
+          <% (1..8).each do |x| %>
+            <% piece = @game.get_piece_at(x, y) %>
+            <td class="cell" data-x="<%= x %>" data-y="<%= y %>" >
+              <% if piece.present? %>
+                <div data-update-url="<%=piece_path(piece)%>" class="piece">
+                <%= link_to piece.unicode_point.html_safe, piece_path(piece) %> 
+                </div>
+              <% end %>  
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <br class="clr"/>
+
+  <div class="game-footer text-center">
+    <button type="button" class="btn btn-danger btn-sm float-right">
+      <%= link_to 'Forfeit', forfeit_game_path(@game.id), method: :patch %>
+    </button>
+  </div>
 </div>
