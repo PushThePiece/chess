@@ -13,7 +13,7 @@
         <tr>
           <td>Game No: <%= game.id %></td>
           <td>
-            <% if game.white_user_id.nil? || game.black_user_id.nil? %>
+            <% if current_user.id != game.white_user_id  && current_user.id != game.black_user_id %>
               <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button", :method => :put %>
             <% else %>
               <% if current_user.id == game.white_user_id || current_user.id == game.black_user_id%>
