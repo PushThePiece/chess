@@ -20,7 +20,8 @@ class GamesController < ApplicationController
 
   def update
     if current_user == current_game.white_player
-      return render text: 'Not Allowed'
+      flash[:alert] = 'You are already playing this game'
+      redirect_to games_path
     else
       current_game.update_attributes(black_player: current_user)
       flash[:alert] = "Let's play!"
@@ -29,16 +30,17 @@ class GamesController < ApplicationController
   end
 
   def show
-    if current_game.active?
-      @game = current_game
+    @game=current_game
+    if @game.active?
+
       #not being used.
       # respond_to do |format|
       #   format.json { render json: @game.pieces }
       #   format.html
       # end
-      @player = current_game.player(current_user)
-        if current_game.check?(@player)
-          flash[:alert] = "#{current_game.player(current_user)} player is in check!"
+      @player = @game.player(current_user)
+        if @game.check?(@player)
+          flash[:alert] = "#{@game.player(current_user)} player is in check!"
         end
     else
       return render text: 'Not Allowed', status: :forbidden
@@ -47,15 +49,12 @@ class GamesController < ApplicationController
 
   def forfeit
     @player = current_user
-    flash[:alert] = "#{@player.email} has forfeited the game."
+    
     @opponent = current_game.opponent(current_user)
     current_game.update_attributes(state: 1)
     # current_game.update_attributes(winner: @opponent)
-
-    redirect_to game_path(current_game)
-  end
-
-  def destroy
+    flash[:alert] = "#{@player.email} has forfeited the game."
+    redirect_to games_path
   end
 
   private

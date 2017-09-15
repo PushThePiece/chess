@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-  enum state: [:active, :deactive]
+  enum state: [:active, :disabled]
 
   after_create :populate_game!
   has_many :pieces
