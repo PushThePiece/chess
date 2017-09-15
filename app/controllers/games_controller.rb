@@ -19,9 +19,13 @@ class GamesController < ApplicationController
   end
 
   def update
-    current_game.update_attributes(black_player: current_user)
-    flash[:alert] = "Let's play!"
-    redirect_to game_path(current_game.id)
+    if current_user == current_game.white_player
+      return render text: 'Not Allowed'
+    else
+      current_game.update_attributes(black_player: current_user)
+      flash[:alert] = "Let's play!"
+      redirect_to game_path(current_game.id)
+    end
   end
 
   def show
