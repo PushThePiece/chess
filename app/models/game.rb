@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  enum state: [:active, :disabled]
+
   after_create :populate_game!
   has_many :pieces
 
@@ -109,10 +111,6 @@ class Game < ApplicationRecord
     false
   end
 
-  def enemy_can_be_captured
-
-  end
-
   def enemies_causing_check(color,x,y)
     enemies = enemies_on_board(color)
     enemies_causing_check = []
@@ -135,7 +133,7 @@ class Game < ApplicationRecord
     opposite_color = (color == 'black') ? 'white' : 'black'
     pieces.where(x: 1..8, y: 1..8, color: opposite_color)
   end
-
+  #not being used
   # def pieces_remaining(color)
   #   pieces.includes(:game).where(x: 1..8, y: 1..8, color: color)
   # end
@@ -144,12 +142,12 @@ class Game < ApplicationRecord
     pieces.where(type: 'King', color: color).last
   end
 
-  def forfeit!(user)
-    if user == 'white_user_id'
-      forfeit_color = 'white'
-    else
-      forfeit_color = 'black'
-    end
+  def player(turn)
+    turn == white_player ? white_player : black_player
+  end
+  
+  def opponent(user)
+    user == white_player ? black_player.id : white_player.id
   end
 
   def player_email

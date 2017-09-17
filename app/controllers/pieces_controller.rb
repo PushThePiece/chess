@@ -5,17 +5,17 @@ class PiecesController < ApplicationController
   end
 
   def update
-    if !players_turn
+    if game_has_two_players? == false
+      flash[:alert]="Waiting for another player" 
+    elsif !players_turn
       flash[:alert] = "It is not your turn"
-      redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
     elsif !players_piece
       flash[:alert] = "That is not your piece"
-      redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
     else
       result = current_piece.move_to!(piece_params["x"].to_i, piece_params["y"].to_i)
       next_player(current_piece.color) if result == true
-      redirect_to game_path(current_piece.game) #temp, needs to redirect through javascript
     end
+    redirect_to game_path(current_piece.game) #temporary, should be done through javascript
   end
 
   private 
@@ -45,6 +45,11 @@ class PiecesController < ApplicationController
 
   def players_piece
     return true if current_user == current_piece.player
+  end
+
+  def game_has_two_players?
+    return true if current_game.black_user_id !=nil && current_game.white_user_id !=nil
+    false
   end
    
 end

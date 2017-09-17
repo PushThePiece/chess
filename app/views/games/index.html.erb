@@ -1,7 +1,7 @@
 
 <div class="col-10 offset-1">
   <div class="welcome text-center">
-      <h1>Welcome to Chess!</h1>
+      <h1>Welcome to Chess <%=current_user.email%>!</h1>
       <br/>
       <%= link_to "New Game", games_path, :class => 'btn btn-primary btn-sm center-fluid', :role => "button", method: :post %>
   </div>
@@ -11,9 +11,9 @@
     <table class = "table">
       <% @games.each do |game| %>
         <tr>
-          <td>Game id: <%= game.id %></td>
+          <td>Game No: <%= game.id %></td>
           <td>
-            <% if game.white_user_id.nil? || game.black_user_id.nil? %>
+            <% if current_user.id != game.white_user_id  && current_user.id != game.black_user_id %>
               <%= link_to "Join!", game_path(game.id), :class => "btn btn-primary btn-sm", :role => "button", :method => :put %>
             <% else %>
               <% if current_user.id == game.white_user_id || current_user.id == game.black_user_id%>

@@ -9,7 +9,9 @@ FactoryGirl.define do
 
   factory :game do
     white_player 
-    turn { white_user_id }
-    black_player 
+    turn          { white_user_id }
+    black_player
+    state         0
+    winner        nil
   end
 end
